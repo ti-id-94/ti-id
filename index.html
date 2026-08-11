@@ -602,18 +602,32 @@ footer {
 
 <script>
 
-const theme = document.getElementById("theme");
+const elements =
+  document.querySelectorAll(".reveal");
 
-theme.addEventListener("click", () => {
+const observer =
+  new IntersectionObserver(entries => {
 
-  document.body.classList.toggle("dark");
+    entries.forEach(entry => {
 
-  theme.textContent =
-    document.body.classList.contains("dark")
-    ? "☀️"
-    : "🌙";
+      if (entry.isIntersecting) {
+        entry.target.classList.add("show");
+      }
 
+    });
+
+  }, {
+    threshold: 0.15
+  });
+
+elements.forEach(element => {
+  observer.observe(element);
 });
+
+
+// ===============================
+// DETAIL ARTIKEL
+// ===============================
 
 
 const elements =
