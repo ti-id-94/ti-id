@@ -1005,7 +1005,130 @@ window.addEventListener("popstate", function() {
   }
 
 });
-</script>
+// ==============================
+// DARK MODE
+// ==============================
+
+const darkModeStyle = document.createElement("style");
+
+darkModeStyle.textContent = `
+body.dark-mode {
+    background: #111111 !important;
+    color: #f5f5f5 !important;
+}
+
+body.dark-mode header {
+    background: #111111 !important;
+    color: #ffffff !important;
+    border-color: #333333 !important;
+}
+
+body.dark-mode section,
+body.dark-mode main {
+    color: #f5f5f5;
+}
+
+body.dark-mode .card,
+body.dark-mode article,
+body.dark-mode .about-card,
+body.dark-mode .contact-card {
+    background: #1b1b1b !important;
+    border-color: #333333 !important;
+    color: #f5f5f5 !important;
+}
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode p {
+    color: inherit;
+}
+
+body.dark-mode .section-description,
+body.dark-mode .article-text {
+    color: #bdbdbd !important;
+}
+
+body.dark-mode footer {
+    background: #111111 !important;
+    border-color: #333333 !important;
+    color: #999999 !important;
+}
+
+body.dark-mode .article-modal-box {
+    background: #1b1b1b !important;
+    color: #ffffff !important;
+}
+
+body.dark-mode .article-modal-text {
+    color: #bdbdbd !important;
+}
+
+body.dark-mode .article-modal-content {
+    color: #dddddd !important;
+}
+
+.dark-mode-button {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    width: 48px;
+    height: 48px;
+    border: 1px solid #dddddd;
+    border-radius: 50%;
+    background: #ffffff;
+    color: #111111;
+    font-size: 21px;
+    cursor: pointer;
+    z-index: 9999;
+    box-shadow: 0 5px 20px rgba(0,0,0,.15);
+}
+
+body.dark-mode .dark-mode-button {
+    background: #222222;
+    color: #ffffff;
+    border-color: #444444;
+}
+`;
+
+document.head.appendChild(darkModeStyle);
+
+
+// Tombol Dark Mode
+const darkModeButton = document.createElement("button");
+
+darkModeButton.className = "dark-mode-button";
+darkModeButton.setAttribute("aria-label", "Ganti tema");
+
+darkModeButton.textContent =
+    localStorage.getItem("theme") === "dark" ? "☀️" : "🌙";
+
+document.body.appendChild(darkModeButton);
+
+
+// Tema yang tersimpan
+if (localStorage.getItem("theme") === "dark") {
+    document.body.classList.add("dark-mode");
+}
+
+
+// Klik tombol
+darkModeButton.addEventListener("click", function () {
+
+    document.body.classList.toggle("dark-mode");
+
+    const isDark =
+        document.body.classList.contains("dark-mode");
+
+    localStorage.setItem(
+        "theme",
+        isDark ? "dark" : "light"
+    );
+
+    darkModeButton.textContent =
+        isDark ? "☀️" : "🌙";
+});</script>
 
 </body>
 </html>
