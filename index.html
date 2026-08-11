@@ -367,7 +367,7 @@ footer {
     <a href="#kontak">Kontak</a>
   </nav>
 
-  <button id="theme">🌙</button>
+  <button class="menu-toggle" onclick="toggleMenu()">☰</button>
 
 </header>
 
@@ -638,7 +638,163 @@ const observer =
 elements.forEach(element => {
   observer.observe(element);
 });
+// DETAIL ARTIKEL
+const articleDetails = [
+  {
+    title: "Memulai Sesuatu yang Baru",
+    category: "ARTIKEL",
+    text: "Setiap perjalanan selalu dimulai dari satu langkah kecil.",
+    content: "Memulai sesuatu yang baru memang tidak selalu mudah. Kadang kita merasa ragu, takut gagal, atau terlalu banyak berpikir sebelum mengambil langkah pertama. Namun, setiap perjalanan besar selalu dimulai dari keberanian untuk mencoba. Tidak perlu menunggu semuanya sempurna. Mulailah dari hal kecil, lakukan dengan konsisten, dan terus belajar dari setiap proses."
+  },
+  {
+    title: "Tentang Sebuah Proses",
+    category: "CATATAN",
+    text: "Tidak semua hal harus berjalan cepat. Yang penting adalah terus bergerak.",
+    content: "Dalam hidup, setiap orang memiliki waktunya masing-masing. Tidak semua hal harus selesai dengan cepat. Ada proses yang membutuhkan waktu, kesabaran, dan banyak percobaan. Yang terpenting bukan seberapa cepat kita sampai, tetapi apakah kita tetap bergerak dan tidak menyerah ketika menghadapi kesulitan."
+  },
+  {
+    title: "Belajar dari Pengalaman",
+    category: "PEMIKIRAN",
+    text: "Pengalaman bisa menjadi guru terbaik dalam perjalanan hidup.",
+    content: "Setiap pengalaman memberikan pelajaran yang berbeda. Kesalahan mengajarkan kita untuk menjadi lebih hati-hati, sedangkan keberhasilan mengajarkan kita untuk terus berkembang. Jangan takut dengan pengalaman yang kurang menyenangkan, karena dari sanalah kita sering menemukan pelajaran yang paling berharga."
+  }
+];
 
+const modal = document.createElement("div");
+
+modal.innerHTML = `
+  <div class="article-modal-box">
+    <button class="article-modal-close">&times;</button>
+    <div class="article-modal-category"></div>
+    <h2 class="article-modal-title"></h2>
+    <p class="article-modal-text"></p>
+    <p class="article-modal-content"></p>
+  </div>
+`;
+
+modal.className = "article-modal";
+
+document.body.appendChild(modal);
+
+const modalBox = modal.querySelector(".article-modal-box");
+const closeModal = modal.querySelector(".article-modal-close");
+
+const modalCategory = modal.querySelector(".article-modal-category");
+const modalTitle = modal.querySelector(".article-modal-title");
+const modalText = modal.querySelector(".article-modal-text");
+const modalContent = modal.querySelector(".article-modal-content");
+
+const modalStyle = document.createElement("style");
+
+modalStyle.textContent = `
+.article-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.65);
+  backdrop-filter: blur(8px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 9999;
+}
+
+.article-modal.show {
+  display: flex;
+}
+
+.article-modal-box {
+  position: relative;
+  width: min(650px, 100%);
+  max-height: 85vh;
+  overflow-y: auto;
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 30px;
+  box-shadow: 0 25px 80px rgba(0,0,0,.25);
+}
+
+.article-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  font-size: 32px;
+  cursor: pointer;
+}
+
+.article-modal-category {
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+
+.article-modal-title {
+  font-size: clamp(26px, 6vw, 42px);
+  margin: 0 35px 15px 0;
+}
+
+.article-modal-text {
+  font-size: 17px;
+  line-height: 1.7;
+  opacity: .75;
+  margin-bottom: 20px;
+}
+
+.article-modal-content {
+  font-size: 16px;
+  line-height: 1.9;
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+`;
+
+document.head.appendChild(modalStyle);
+
+document.querySelectorAll(".article-link").forEach((link, index) => {
+  link.addEventListener("click", function(e) {
+    e.preventDefault();
+
+    const article = articleDetails[index];
+
+    if (!article) return;
+
+    modalCategory.textContent = article.category;
+    modalTitle.textContent = article.title;
+    modalText.textContent = article.text;
+    modalContent.textContent = article.content;
+
+    modal.classList.add("show");
+    document.body.classList.add("modal-open");
+  });
+});
+
+function hideArticleModal() {
+  modal.classList.remove("show");
+  document.body.classList.remove("modal-open");
+}
+
+closeModal.addEventListener("click", hideArticleModal);
+
+modal.addEventListener("click", function(e) {
+  if (e.target === modal) {
+    hideArticleModal();
+  }
+});
+
+document.addEventListener("keydown", function(e) {
+  if (e.key === "Escape") {
+    hideArticleModal();
+  }
+});
 </script>
 
 </body>
