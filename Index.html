@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>TI.ID — Personal Portfolio</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --bg:#f7f7f8;
+  --card:#fff;
+  --text:#111;
+  --muted:#707070;
+  --primary:#6c63ff;
+  --border:#e7e7e7;
+}
+
+.dark {
+  --bg:#0d0d0f;
+  --card:#17171a;
+  --text:#fff;
+  --muted:#aaa;
+  --border:#29292d;
+}
+
+* {
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  scroll-behavior:smooth;
+}
+
+body {
+  font-family:Inter,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  transition:.3s;
+}
+
+header {
+  position:fixed;
+  top:0;
+  width:100%;
+  z-index:1000;
+  padding:18px 7%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:rgba(255,255,255,.8);
+  backdrop-filter:blur(15px);
+  border-bottom:1px solid var(--border);
+}
+
+.dark header {
+  background:rgba(13,13,15,.8);
+}
+
+.logo {
+  font-size:23px;
+  font-weight:800;
+}
+
+.logo span {
+  color:var(--primary);
+}
+
+nav a {
+  text-decoration:none;
+  color:var(--text);
+  margin-left:25px;
+  font-size:14px;
+}
+
+nav a:hover {
+  color:var(--primary);
+}
+
+#theme {
+  margin-left:20px;
+  border:1px solid var(--border);
+  background:var(--card);
+  color:var(--text);
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  cursor:pointer;
+}
+
+.hero {
+  min-height:100vh;
+  padding:140px 7% 80px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:50px;
+  background:
+  radial-gradient(circle at 80% 20%,
+  rgba(108,99,255,.18),
+  transparent 30%);
+}
+
+.hero-text {
+  max-width:700px;
+}
+
+.badge {
+  display:inline-block;
+  padding:8px 15px;
+  border-radius:30px;
+  background:rgba(108,99,255,.1);
+  color:var(--primary);
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:20px;
+}
+
+.hero h1 {
+  font-size:clamp(45px,7vw,80px);
+  line-height:1.02;
+  letter-spacing:-4px;
+}
+
+.hero h1 span {
+  color:var(--primary);
+}
+
+.hero p {
+  color:var(--muted);
+  font-size:18px;
+  max-width:600px;
+  margin:25px 0;
+  line-height:1.8;
+}
+
+.buttons {
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.btn {
+  display:inline-block;
+  padding:14px 23px;
+  border-radius:12px;
+  text-decoration:none;
+  font-weight:700;
+  transition:.3s;
+}
+
+.btn-primary {
+  background:var(--primary);
+  color:#fff;
+}
+
+.btn-secondary {
+  border:1px solid var(--border);
+  color:var(--text);
+  background:var(--card);
+}
+
+.btn:hover {
+  transform:translateY(-4px);
+}
+
+.profile {
+  width:290px;
+  height:290px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#6c63ff,#9b94ff);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:95px;
+  box-shadow:0 30px 80px rgba(108,99,255,.25);
+  animation:floating 4s ease-in-out infinite;
+}
+
+section {
+  padding:100px 7%;
+}
+
+.section-label {
+  color:var(--primary);
+  font-size:13px;
+  font-weight:800;
+  letter-spacing:2px;
+  margin-bottom:10px;
+}
+
+.section-title {
+  font-size:clamp(32px,5vw,50px);
+  margin-bottom:15px;
+}
+
+.section-description {
+  color:var(--muted);
+  max-width:650px;
+  line-height:1.8;
+  margin-bottom:40px;
+}
+
+.about-grid,
+.articles {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:22px;
+}
+
+.card {
+  background:var(--card);
+  border:1px solid var(--border);
+  padding:30px;
+  border-radius:20px;
+  transition:.3s;
+}
+
+.card:hover {
+  transform:translateY(-7px);
+  box-shadow:0 20px 50px rgba(0,0,0,.08);
+}
+
+.card h3 {
+  margin-bottom:12px;
+}
+
+.card p {
+  color:var(--muted);
+  line-height:1.8;
+}
+
+.article-number {
+  font-size:40px;
+  font-weight:800;
+  color:var(--primary);
+  margin-bottom:20px;
+}
+
+.article-date {
+  color:var(--muted);
+  font-size:12px;
+  margin-bottom:12px;
+}
+
+.article-link {
+  display:inline-block;
+  margin-top:20px;
+  color:var(--primary);
+  text-decoration:none;
+  font-weight:700;
+}
+
+.contact {
+  text-align:center;
+  background:var(--card);
+  border-top:1px solid var(--border);
+}
+
+.contact .section-description {
+  margin-left:auto;
+  margin-right:auto;
+}
+
+footer {
+  text-align:center;
+  padding:25px;
+  color:var(--muted);
+  font-size:13px;
+  border-top:1px solid var(--border);
+}
+
+.reveal {
+  opacity:0;
+  transform:translateY(30px);
+  transition:.8s;
+}
+
+.reveal.show {
+  opacity:1;
+  transform:translateY(0);
+}
+
+@keyframes floating {
+  0%,100% { transform:translateY(0); }
+  50% { transform:translateY(-15px); }
+}
+
+@media(max-width:800px) {
+
+  header {
+    padding:15px 5%;
+  }
+
+  nav a {
+    display:none;
+  }
+
+  .hero {
+    padding:130px 5% 70px;
+    flex-direction:column-reverse;
+    text-align:center;
+  }
+
+  .hero p {
+    margin-left:auto;
+    margin-right:auto;
+  }
+
+  .buttons {
+    justify-content:center;
+  }
+
+  .profile {
+    width:210px;
+    height:210px;
+    font-size:70px;
+  }
+
+  section {
+    padding:75px 5%;
+  }
+
+  .about-grid,
+  .articles {
+    grid-template-columns:1fr;
+  }
+
+  .hero h1 {
+    letter-spacing:-2px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+  <div class="logo">
+    TI<span>.</span>ID
+  </div>
+
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#tentang">Tentang</a>
+    <a href="#tulisan">Tulisan</a>
+    <a href="#kontak">Kontak</a>
+  </nav>
+
+  <button id="theme">🌙</button>
+
+</header>
+
+
+<!-- HERO -->
+
+<section class="hero" id="home">
+
+  <div class="hero-text">
+
+    <div class="badge">
+      WELCOME TO TI.ID
+    </div>
+
+    <h1>
+      Halo, kami<br>
+      <span>TI.ID.</span>
+    </h1>
+
+    <p>
+      Selamat datang di TI.ID.
+      Sebuah ruang untuk berbagi cerita,
+      pemikiran, pengalaman, dan berbagai
+      konten menarik.
+    </p>
+
+    <div class="buttons">
+
+      <a href="#tulisan" class="btn btn-primary">
+        Lihat Tulisan →
+      </a>
+
+      <a href="#kontak" class="btn btn-secondary">
+        Hubungi Kami
+      </a>
+
+    </div>
+
+  </div>
+
+  <div class="profile">
+    TI
+  </div>
+
+</section>
+
+
+<!-- TENTANG -->
+
+<section id="tentang" class="reveal">
+
+  <div class="section-label">
+    TENTANG TI.ID
+  </div>
+
+  <h2 class="section-title">
+    Tentang TI.ID.
+  </h2>
+
+  <p class="section-description">
+    TI.ID adalah ruang sederhana untuk berbagi
+    informasi, cerita, pemikiran, dan konten
+    yang menarik.
+  </p>
+
+  <div class="about-grid">
+
+    <div class="card">
+      <h3>✍️ Tulisan</h3>
+
+      <p>
+        Berbagai tulisan dan catatan yang
+        dibuat untuk dibaca dan dinikmati.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>💡 Ide</h3>
+
+      <p>
+        Berbagi ide, pemikiran, dan perspektif
+        mengenai berbagai hal.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>🚀 Berkembang</h3>
+
+      <p>
+        Terus belajar, berkembang, dan membuat
+        sesuatu yang lebih baik.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- TULISAN -->
+
+<section id="tulisan" class="reveal">
+
+  <div class="section-label">
+    BLOG & KONTEN
+  </div>
+
+  <h2 class="section-title">
+    Tulisan terbaru.
+  </h2>
+
+  <p class="section-description">
+    Temukan berbagai tulisan dan konten
+    dari TI.ID.
+  </p>
+
+  <div class="articles">
+
+    <article class="card">
+
+      <div class="article-number">
+        01
+      </div>
+
+      <div class="article-date">
+        ARTIKEL
+      </div>
+
+      <h3>
+        Memulai Sesuatu yang Baru
+      </h3>
+
+      <p>
+        Setiap perjalanan selalu dimulai
+        dari satu langkah kecil.
+      </p>
+
+      <a href="#" class="article-link">
+        Baca artikel →
+      </a>
+
+    </article>
+
+
+    <article class="card">
+
+      <div class="article-number">
+        02
+      </div>
+
+      <div class="article-date">
+        CATATAN
+      </div>
+
+      <h3>
+        Tentang Sebuah Proses
+      </h3>
+
+      <p>
+        Tidak semua hal harus berjalan cepat.
+        Yang penting adalah terus bergerak.
+      </p>
+
+      <a href="#" class="article-link">
+        Baca artikel →
+      </a>
+
+    </article>
+
+
+    <article class="card">
+
+      <div class="article-number">
+        03
+      </div>
+
+      <div class="article-date">
+        PEMIKIRAN
+      </div>
+
+      <h3>
+        Belajar dari Pengalaman
+      </h3>
+
+      <p>
+        Pengalaman bisa menjadi guru terbaik
+        dalam perjalanan hidup.
+      </p>
+
+      <a href="#" class="article-link">
+        Baca artikel →
+      </a>
+
+    </article>
+
+  </div>
+
+</section>
+
+
+<!-- KONTAK -->
+
+<section class="contact reveal" id="kontak">
+
+  <div class="section-label">
+    KONTAK
+  </div>
+
+  <h2 class="section-title">
+    Mari terhubung.
+  </h2>
+
+  <p class="section-description">
+    Ingin bertanya atau berdiskusi dengan TI.ID?
+    Silakan hubungi kami melalui WhatsApp.
+  </p>
+
+  <a
+    href="https://wa.me/6281298776325"
+    class="btn btn-primary"
+    target="_blank">
+    💬 Chat WhatsApp
+  </a>
+
+</section>
+
+
+<footer>
+  © 2026 TI.ID — All Rights Reserved.
+</footer>
+
+
+<script>
+
+const theme = document.getElementById("theme");
+
+theme.addEventListener("click", () => {
+
+  document.body.classList.toggle("dark");
+
+  theme.textContent =
+    document.body.classList.contains("dark")
+    ? "☀️"
+    : "🌙";
+
+});
+
+
+const elements =
+  document.querySelectorAll(".reveal");
+
+const observer =
+  new IntersectionObserver(entries => {
+
+    entries.forEach(entry => {
+
+      if (entry.isIntersecting) {
+        entry.target.classList.add("show");
+      }
+
+    });
+
+  }, {
+    threshold:0.15
+  });
+
+
+elements.forEach(element => {
+  observer.observe(element);
+});
+
+</script>
+
+</body>
+</html>
