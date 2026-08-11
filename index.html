@@ -638,113 +638,383 @@ const observer =
 elements.forEach(element => {
   observer.observe(element);
 });
+// ===============================
 // DETAIL ARTIKEL
-document.querySelectorAll(".article-link").forEach((link, index) => {
+// ===============================
 
-  link.addEventListener("click", function(e) {
-    e.preventDefault();
+const articleDetails = [
+  {
+    title: "Memulai Sesuatu yang Baru",
+    category: "ARTIKEL",
+    text: "Setiap perjalanan selalu dimulai dari satu langkah kecil.",
+    content:
+      "Memulai sesuatu yang baru memang tidak selalu mudah. Kadang kita merasa ragu, takut gagal, atau terlalu banyak berpikir sebelum mengambil langkah pertama. Namun, setiap perjalanan besar selalu dimulai dari keberanian untuk mencoba. Tidak perlu menunggu semuanya sempurna. Mulailah dari hal kecil, lakukan dengan konsisten, dan terus belajar dari setiap proses."
+  },
+  {
+    title: "Tentang Sebuah Proses",
+    category: "CATATAN",
+    text: "Tidak semua hal harus berjalan cepat. Yang penting adalah terus bergerak.",
+    content:
+      "Dalam hidup, setiap orang memiliki waktunya masing-masing. Tidak semua hal harus selesai dengan cepat. Ada proses yang membutuhkan waktu, kesabaran, dan banyak percobaan. Yang terpenting bukan seberapa cepat kita sampai, tetapi apakah kita tetap bergerak dan tidak menyerah ketika menghadapi kesulitan."
+  },
+  {
+    title: "Belajar dari Pengalaman",
+    category: "PEMIKIRAN",
+    text: "Pengalaman bisa menjadi guru terbaik dalam perjalanan hidup.",
+    content:
+      "Setiap pengalaman memberikan pelajaran yang berbeda. Kesalahan mengajarkan kita untuk menjadi lebih hati-hati, sedangkan keberhasilan mengajarkan kita untuk terus berkembang. Jangan takut dengan pengalaman yang kurang menyenangkan, karena dari sanalah kita sering menemukan pelajaran yang paling berharga."
+  }
+];
 
-    const articles = [
-      {
-        title: "Memulai Sesuatu yang Baru",
-        category: "ARTIKEL",
-        text: "Setiap perjalanan selalu dimulai dari satu langkah kecil.",
-        content: "Memulai sesuatu yang baru memang tidak selalu mudah. Kadang kita merasa ragu atau takut gagal. Namun setiap perjalanan besar selalu dimulai dari keberanian untuk mencoba. Mulailah dari hal kecil, lakukan dengan konsisten, dan terus belajar dari setiap proses."
-      },
-      {
-        title: "Tentang Sebuah Proses",
-        category: "CATATAN",
-        text: "Tidak semua hal harus berjalan cepat. Yang penting adalah terus bergerak.",
-        content: "Dalam hidup, setiap orang memiliki waktunya masing-masing. Tidak semua hal harus selesai dengan cepat. Ada proses yang membutuhkan waktu, kesabaran, dan banyak percobaan. Yang terpenting adalah tetap bergerak dan tidak menyerah."
-      },
-      {
-        title: "Belajar dari Pengalaman",
-        category: "PEMIKIRAN",
-        text: "Pengalaman bisa menjadi guru terbaik dalam perjalanan hidup.",
-        content: "Setiap pengalaman memberikan pelajaran yang berbeda. Kesalahan mengajarkan kita untuk menjadi lebih hati-hati, sedangkan keberhasilan mengajarkan kita untuk terus berkembang."
-      }
-    ];
 
-    const article = articles[index];
+// Buat modal
+const modal = document.createElement("div");
 
-    if (!article) return;
+modal.className = "article-modal";
 
-    const popup = document.createElement("div");
+modal.innerHTML = `
+  <div class="article-modal-box">
 
-    popup.style.cssText = `
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,.7);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:20px;
-      z-index:99999;
-    `;
+    <button class="article-modal-close" aria-label="Tutup">
+      ×
+    </button>
 
-    popup.innerHTML = `
-      <div style="
-        background:var(--card,#fff);
-        color:var(--text,#111);
-        max-width:650px;
-        width:100%;
-        max-height:85vh;
-        overflow:auto;
-        border-radius:24px;
-        padding:30px;
-        position:relative;
-        box-sizing:border-box;
-      ">
+    <div class="article-modal-category"></div>
 
-        <button id="closeArticle" style="
-          position:absolute;
-          right:15px;
-          top:10px;
-          border:none;
-          background:none;
-          font-size:32px;
-          cursor:pointer;
-          color:inherit;
-        ">×</button>
+    <h2 class="article-modal-title"></h2>
 
-        <div style="
-          color:var(--primary,#6c63ff);
-          font-weight:bold;
-          letter-spacing:2px;
-          font-size:13px;
-          margin-bottom:10px;
-        ">
-          ${article.category}
-        </div>
+    <p class="article-modal-text"></p>
 
-        <h2 style="font-size:32px;margin:0 40px 15px 0;">
-          ${article.title}
-        </h2>
+    <div class="article-modal-content"></div>
 
-        <p style="font-size:17px;line-height:1.7;opacity:.75;">
-          ${article.text}
-        </p>
+  </div>
+`;
 
-        <p style="font-size:16px;line-height:1.9;">
-          ${article.content}
-        </p>
+document.body.appendChild(modal);
 
-      </div>
-    `;
 
-    document.body.appendChild(popup);
+// Ambil elemen modal
+const modalCategory =
+  modal.querySelector(".article-modal-category");
 
-    document.getElementById("closeArticle").onclick = function() {
-      popup.remove();
-    };
+const modalTitle =
+  modal.querySelector(".article-modal-title");
 
-    popup.onclick = function(e) {
-      if (e.target === popup) {
-        popup.remove();
-      }
-    };
+const modalText =
+  modal.querySelector(".article-modal-text");
 
-  });
+const modalContent =
+  modal.querySelector(".article-modal-content");
+
+const closeModal =
+  modal.querySelector(".article-modal-close");
+
+
+// ===============================
+// CSS MODAL
+// ===============================
+
+const modalStyle = document.createElement("style");
+
+modalStyle.textContent = `
+
+.article-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 18px;
+
+  background: rgba(0,0,0,.65);
+  backdrop-filter: blur(10px);
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition:
+    opacity .3s ease,
+    visibility .3s ease;
+}
+
+.article-modal.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+.article-modal-box {
+  position: relative;
+
+  width: min(650px, 100%);
+  max-height: 85vh;
+
+  overflow-y: auto;
+
+  background: var(--card, #fff);
+  color: var(--text, #111);
+
+  border: 1px solid var(--border, #ddd);
+  border-radius: 26px;
+
+  padding: 32px;
+
+  box-shadow:
+    0 25px 80px rgba(0,0,0,.30);
+
+  transform: translateY(30px) scale(.97);
+
+  transition:
+    transform .35s ease;
+}
+
+.article-modal.show .article-modal-box {
+  transform: translateY(0) scale(1);
+}
+
+
+/* Tombol X */
+
+.article-modal-close {
+  position: absolute;
+
+  top: 12px;
+  right: 15px;
+
+  width: 42px;
+  height: 42px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: rgba(128,128,128,.12);
+
+  color: var(--text, #111);
+
+  font-size: 30px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition: .2s;
+}
+
+.article-modal-close:hover {
+  transform: rotate(90deg);
+}
+
+
+/* Kategori */
+
+.article-modal-category {
+  margin-bottom: 12px;
+
+  color: var(--primary, #6c5ce7);
+
+  font-size: 12px;
+  font-weight: 800;
+
+  letter-spacing: 2px;
+}
+
+
+/* Judul */
+
+.article-modal-title {
+  margin: 0 45px 15px 0;
+
+  font-size: clamp(27px, 6vw, 42px);
+
+  line-height: 1.15;
+}
+
+
+/* Kalimat pembuka */
+
+.article-modal-text {
+  margin-bottom: 24px;
+
+  font-size: 18px;
+
+  line-height: 1.7;
+
+  opacity: .7;
+}
+
+
+/* Isi artikel */
+
+.article-modal-content {
+  font-size: 16px;
+
+  line-height: 1.9;
+
+  opacity: .9;
+}
+
+
+/* Scrollbar */
+
+.article-modal-box::-webkit-scrollbar {
+  width: 6px;
+}
+
+.article-modal-box::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: rgba(100,100,100,.3);
+}
+
+
+/* HP */
+
+@media (max-width: 600px) {
+
+  .article-modal {
+    padding: 12px;
+    align-items: flex-end;
+  }
+
+  .article-modal-box {
+    width: 100%;
+    max-height: 88vh;
+
+    padding: 26px 22px 30px;
+
+    border-radius: 24px 24px 18px 18px;
+  }
+
+  .article-modal-title {
+    font-size: 30px;
+  }
+
+  .article-modal-text {
+    font-size: 16px;
+  }
+
+  .article-modal-content {
+    font-size: 15px;
+    line-height: 1.85;
+  }
+
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+`;
+
+document.head.appendChild(modalStyle);
+
+
+// ===============================
+// BUKA ARTIKEL
+// ===============================
+
+document.addEventListener("click", function(e) {
+
+  const link = e.target.closest(".article-link");
+
+  if (!link) return;
+
+  e.preventDefault();
+
+  /*
+   * Ambil nomor artikel dari posisi tombol.
+   * Jadi artikel 1, 2, 3 otomatis cocok.
+   */
+
+  const links =
+    document.querySelectorAll(".article-link");
+
+  const index =
+    Array.from(links).indexOf(link);
+
+  const article =
+    articleDetails[index];
+
+  if (!article) return;
+
+
+  modalCategory.textContent =
+    article.category;
+
+  modalTitle.textContent =
+    article.title;
+
+  modalText.textContent =
+    article.text;
+
+  modalContent.textContent =
+    article.content;
+
+
+  modal.classList.add("show");
+
+  document.body.classList.add("modal-open");
+
+});
+
+
+// ===============================
+// TUTUP MODAL
+// ===============================
+
+function hideArticleModal() {
+
+  modal.classList.remove("show");
+
+  document.body.classList.remove("modal-open");
+
+}
+
+
+// Tombol X
+closeModal.addEventListener(
+  "click",
+  hideArticleModal
+);
+
+
+// Klik area gelap
+modal.addEventListener("click", function(e) {
+
+  if (e.target === modal) {
+    hideArticleModal();
+  }
+
+});
+
+
+// Tombol ESC
+document.addEventListener("keydown", function(e) {
+
+  if (e.key === "Escape") {
+    hideArticleModal();
+  }
+
+});
+
+
+// Tombol BACK Android
+history.pushState(null, "", location.href);
+
+window.addEventListener("popstate", function() {
+
+  if (modal.classList.contains("show")) {
+
+    hideArticleModal();
+
+    history.pushState(
+      null,
+      "",
+      location.href
+    );
+
+  }
 
 });
 </script>
