@@ -1,1134 +1,1571 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>TI.ID — Personal Portfolio</title>
+  <meta name="description" content="TI.ID — Ruang untuk berbagi cerita, pemikiran, pengalaman, dan berbagai konten menarik.">
+  <meta name="theme-color" content="#6c63ff">
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  <title>TI.ID — Personal Portfolio</title>
 
-:root {
-  --bg:#f7f7f8;
-  --card:#fff;
-  --text:#111;
-  --muted:#707070;
-  --primary:#6c63ff;
-  --border:#e7e7e7;
-}
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
-.dark {
-  --bg:#0d0d0f;
-  --card:#17171a;
-  --text:#fff;
-  --muted:#aaa;
-  --border:#29292d;
-}
+    :root {
+      --bg: #f7f7f8;
+      --card: #ffffff;
+      --text: #111111;
+      --muted: #707070;
+      --primary: #6c63ff;
+      --primary-dark: #554ce8;
+      --border: #e7e7e7;
+      --header: rgba(255, 255, 255, 0.82);
+      --shadow: rgba(0, 0, 0, 0.08);
+    }
 
-* {
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  scroll-behavior:smooth;
-}
+    body.dark-mode {
+      --bg: #0d0d0f;
+      --card: #17171a;
+      --text: #ffffff;
+      --muted: #aaaaaa;
+      --border: #29292d;
+      --header: rgba(13, 13, 15, 0.85);
+      --shadow: rgba(0, 0, 0, 0.35);
+    }
 
-body {
-  font-family:Inter,sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  transition:.3s;
-}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
 
-header {
-  position:fixed;
-  top:0;
-  width:100%;
-  z-index:1000;
-  padding:18px 7%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  background:rgba(255,255,255,.8);
-  backdrop-filter:blur(15px);
-  border-bottom:1px solid var(--border);
-}
+    html {
+      scroll-padding-top: 90px;
+    }
 
-.dark header {
-  background:rgba(13,13,15,.8);
-}
+    body {
+      font-family: "Inter", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.3s ease, color 0.3s ease;
+      overflow-x: hidden;
+    }
 
-.logo {
-    display:flex;
-    align-items:center;
-    gap:10px;
-    font-size:23px;
-    font-weight:800;
-}
+    body.modal-open {
+      overflow: hidden;
+    }
 
-.logo img {
-    width:42px;
-    height:42px;
-    object-fit:contain;
-}
+    /* =========================
+       HEADER
+    ========================= */
 
-nav a {
-  text-decoration:none;
-  color:var(--text);
-  margin-left:25px;
-  font-size:14px;
-}
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
 
-nav a:hover {
-  color:var(--primary);
-}
+      padding: 15px 7%;
 
-#theme {
-  margin-left:20px;
-  border:1px solid var(--border);
-  background:var(--card);
-  color:var(--text);
-  width:38px;
-  height:38px;
-  border-radius:50%;
-  cursor:pointer;
-}
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
 
-.hero {
-  min-height:100vh;
-  padding:140px 7% 80px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:50px;
-  background:
-  radial-gradient(circle at 80% 20%,
-  rgba(108,99,255,.18),
-  transparent 30%);
-}
+      background: var(--header);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
 
-.hero-text {
-  max-width:700px;
-}
+      border-bottom: 1px solid var(--border);
+    }
 
-.badge {
-  display:inline-block;
-  padding:8px 15px;
-  border-radius:30px;
-  background:rgba(108,99,255,.1);
-  color:var(--primary);
-  font-size:13px;
-  font-weight:700;
-  margin-bottom:20px;
-}
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
 
-.hero h1 {
-  font-size:clamp(45px,7vw,80px);
-  line-height:1.02;
-  letter-spacing:-4px;
-}
+      color: var(--text);
+      text-decoration: none;
 
-.hero h1 span {
-  color:var(--primary);
-}
+      font-size: 23px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
 
-.hero p {
-  color:var(--muted);
-  font-size:18px;
-  max-width:600px;
-  margin:25px 0;
-  line-height:1.8;
-}
+    .logo img {
+      width: 42px;
+      height: 42px;
+      object-fit: contain;
+    }
 
-.buttons {
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
-}
+    .logo span {
+      color: var(--primary);
+    }
 
-.btn {
-  display:inline-block;
-  padding:14px 23px;
-  border-radius:12px;
-  text-decoration:none;
-  font-weight:700;
-  transition:.3s;
-}
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
 
-.btn-primary {
-  background:var(--primary);
-  color:#fff;
-}
+    nav a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
 
-.btn-secondary {
-  border:1px solid var(--border);
-  color:var(--text);
-  background:var(--card);
-}
+      transition: color 0.2s ease;
+    }
 
-.btn:hover {
-  transform:translateY(-4px);
-}
+    nav a:hover {
+      color: var(--primary);
+    }
 
-.profile {
-  width:290px;
-  height:290px;
-  border-radius:50%;
-  background:linear-gradient(135deg,#6c63ff,#9b94ff);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:95px;
-  box-shadow:0 30px 80px rgba(108,99,255,.25);
-  animation:floating 4s ease-in-out infinite;
-}
-  
-.profile img {
-    width: 75%;
-    height: 75%;
-    object-fit: contain;
-    border-radius: 50%;
-}
-section {
-  padding:100px 7%;
-}
+    .theme-button,
+    .menu-toggle {
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
 
-.section-label {
-  color:var(--primary);
-  font-size:13px;
-  font-weight:800;
-  letter-spacing:2px;
-  margin-bottom:10px;
-}
+      width: 40px;
+      height: 40px;
 
-.section-title {
-  font-size:clamp(32px,5vw,50px);
-  margin-bottom:15px;
-}
+      border-radius: 50%;
+      cursor: pointer;
 
-.section-description {
-  color:var(--muted);
-  max-width:650px;
-  line-height:1.8;
-  margin-bottom:40px;
-}
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-.about-grid,
-.articles {
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:22px;
-}
+      font-size: 18px;
 
-.card {
-  background:var(--card);
-  border:1px solid var(--border);
-  padding:30px;
-  border-radius:20px;
-  transition:.3s;
-}
+      transition: 0.25s;
+    }
 
-.card:hover {
-  transform:translateY(-7px);
-  box-shadow:0 20px 50px rgba(0,0,0,.08);
-}
+    .theme-button:hover,
+    .menu-toggle:hover {
+      transform: translateY(-2px);
+      border-color: var(--primary);
+    }
 
-.card h3 {
-  margin-bottom:12px;
-}
+    .menu-toggle {
+      display: none;
+      font-size: 20px;
+    }
 
-.card p {
-  color:var(--muted);
-  line-height:1.8;
-}
+    /* =========================
+       MOBILE MENU
+    ========================= */
 
-.article-number {
-  font-size:40px;
-  font-weight:800;
-  color:var(--primary);
-  margin-bottom:20px;
-}
+    .mobile-menu {
+      position: fixed;
+      top: 73px;
+      left: 5%;
+      right: 5%;
 
-.article-date {
-  color:var(--muted);
-  font-size:12px;
-  margin-bottom:12px;
-}
+      z-index: 999;
 
-.article-link {
-  display:inline-block;
-  margin-top:20px;
-  color:var(--primary);
-  text-decoration:none;
-  font-weight:700;
-}
+      padding: 12px;
 
-.contact {
-  text-align:center;
-  background:var(--card);
-  border-top:1px solid var(--border);
-}
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
 
-.contact .section-description {
-  margin-left:auto;
-  margin-right:auto;
-}
+      box-shadow: 0 20px 50px var(--shadow);
 
-footer {
-  text-align:center;
-  padding:25px;
-  color:var(--muted);
-  font-size:13px;
-  border-top:1px solid var(--border);
-}
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
 
-.reveal {
-  opacity:1;
-  transform:translateY(0);
-  transition:.8s;
-}
+      transition: 0.25s ease;
+    }
 
-.reveal.show {
-  opacity:1;
-  transform:translateY(0);
-}
+    .mobile-menu.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
 
-@keyframes floating {
-  0%,100% { transform:translateY(0); }
-  50% { transform:translateY(-15px); }
-}
+    .mobile-menu a {
+      display: block;
 
-@media(max-width:800px) {
+      padding: 14px 16px;
 
-  header {
-    padding:15px 5%;
-  }
+      color: var(--text);
+      text-decoration: none;
 
-  nav a {
-    display:none;
-  }
+      border-radius: 12px;
 
-  .hero {
-    padding:130px 5% 70px;
-    flex-direction:column-reverse;
-    text-align:center;
-  }
+      font-weight: 600;
+    }
 
-  .hero p {
-    margin-left:auto;
-    margin-right:auto;
-  }
+    .mobile-menu a:hover {
+      background: rgba(108, 99, 255, 0.1);
+      color: var(--primary);
+    }
 
-  .buttons {
-    justify-content:center;
-  }
+    /* =========================
+       HERO
+    ========================= */
 
-  .profile {
-    width: 180px;
-    height: 180px;
-    font-size: 60px;
-    margin: 20px auto;
-}
+    .hero {
+      min-height: 100vh;
 
-.profile img {
-    width: 75%;
-    height: 75%;
-    object-fit: contain;
-    border-radius: 50%;
-}
+      padding: 140px 7% 80px;
 
-  section {
-    padding:75px 5%;
-  }
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
 
-  .about-grid,
-  .articles {
-    grid-template-columns:1fr;
-  }
+      gap: 50px;
 
-  .hero h1 {
-    letter-spacing:-2px;
-  }
-</style>
+      background:
+        radial-gradient(
+          circle at 80% 20%,
+          rgba(108, 99, 255, 0.18),
+          transparent 30%
+        );
+    }
+
+    .hero-text {
+      max-width: 700px;
+    }
+
+    .badge {
+      display: inline-block;
+
+      padding: 8px 15px;
+      margin-bottom: 20px;
+
+      border-radius: 30px;
+
+      background: rgba(108, 99, 255, 0.1);
+      color: var(--primary);
+
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .hero h1 {
+      font-size: clamp(45px, 7vw, 80px);
+      line-height: 1.02;
+      letter-spacing: -4px;
+    }
+
+    .hero h1 span {
+      color: var(--primary);
+    }
+
+    .hero p {
+      max-width: 600px;
+
+      margin: 25px 0;
+
+      color: var(--muted);
+
+      font-size: 18px;
+      line-height: 1.8;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+
+      padding: 14px 23px;
+
+      border-radius: 12px;
+
+      text-decoration: none;
+
+      font-weight: 700;
+
+      transition: 0.3s;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-4px);
+    }
+
+    .btn-secondary {
+      background: var(--card);
+      color: var(--text);
+
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-4px);
+      border-color: var(--primary);
+    }
+
+    .profile {
+      flex-shrink: 0;
+
+      width: 290px;
+      height: 290px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 50%;
+
+      background: linear-gradient(
+        135deg,
+        #6c63ff,
+        #9b94ff
+      );
+
+      box-shadow:
+        0 30px 80px rgba(108, 99, 255, 0.25);
+
+      animation: floating 4s ease-in-out infinite;
+    }
+
+    .profile img {
+      width: 75%;
+      height: 75%;
+
+      object-fit: contain;
+
+      border-radius: 50%;
+    }
+
+    /* =========================
+       SECTION
+    ========================= */
+
+    section {
+      padding: 100px 7%;
+    }
+
+    .section-label {
+      margin-bottom: 10px;
+
+      color: var(--primary);
+
+      font-size: 13px;
+      font-weight: 800;
+
+      letter-spacing: 2px;
+    }
+
+    .section-title {
+      margin-bottom: 15px;
+
+      font-size: clamp(32px, 5vw, 50px);
+      line-height: 1.1;
+      letter-spacing: -2px;
+    }
+
+    .section-description {
+      max-width: 650px;
+
+      margin-bottom: 40px;
+
+      color: var(--muted);
+
+      line-height: 1.8;
+    }
+
+    /* =========================
+       ABOUT
+    ========================= */
+
+    .about-grid,
+    .articles {
+      display: grid;
+
+      grid-template-columns: repeat(3, 1fr);
+
+      gap: 22px;
+    }
+
+    .card {
+      padding: 30px;
+
+      background: var(--card);
+
+      border: 1px solid var(--border);
+      border-radius: 20px;
+
+      transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-7px);
+
+      box-shadow:
+        0 20px 50px var(--shadow);
+
+      border-color: rgba(108, 99, 255, 0.35);
+    }
+
+    .card h3 {
+      margin-bottom: 12px;
+
+      font-size: 19px;
+    }
+
+    .card p {
+      color: var(--muted);
+
+      line-height: 1.8;
+    }
+
+    /* =========================
+       ARTICLES
+    ========================= */
+
+    .article-number {
+      margin-bottom: 20px;
+
+      color: var(--primary);
+
+      font-size: 40px;
+      font-weight: 800;
+    }
+
+    .article-date {
+      margin-bottom: 12px;
+
+      color: var(--muted);
+
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .article-link {
+      display: inline-block;
+
+      margin-top: 20px;
+
+      color: var(--primary);
+
+      text-decoration: none;
+
+      font-weight: 700;
+    }
+
+    .article-link:hover {
+      text-decoration: underline;
+    }
+
+    /* =========================
+       CONTACT
+    ========================= */
+
+    .contact {
+      text-align: center;
+
+      background: var(--card);
+
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .contact .section-description {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+      padding: 25px;
+
+      text-align: center;
+
+      color: var(--muted);
+
+      font-size: 13px;
+    }
+
+    /* =========================
+       SCROLL ANIMATION
+    ========================= */
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(25px);
+
+      transition:
+        opacity 0.8s ease,
+        transform 0.8s ease;
+    }
+
+    .reveal.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* =========================
+       ARTICLE MODAL
+    ========================= */
+
+    .article-modal {
+      position: fixed;
+      inset: 0;
+
+      z-index: 99999;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 18px;
+
+      background: rgba(0, 0, 0, 0.65);
+
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+
+      opacity: 0;
+      visibility: hidden;
+
+      transition:
+        opacity 0.3s ease,
+        visibility 0.3s ease;
+    }
+
+    .article-modal.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .article-modal-box {
+      position: relative;
+
+      width: min(650px, 100%);
+      max-height: 85vh;
+
+      overflow-y: auto;
+
+      padding: 32px;
+
+      background: var(--card);
+      color: var(--text);
+
+      border: 1px solid var(--border);
+      border-radius: 26px;
+
+      box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.3);
+
+      transform: translateY(30px) scale(0.97);
+
+      transition: transform 0.35s ease;
+    }
+
+    .article-modal.show .article-modal-box {
+      transform: translateY(0) scale(1);
+    }
+
+    .article-modal-close {
+      position: absolute;
+
+      top: 12px;
+      right: 15px;
+
+      width: 42px;
+      height: 42px;
+
+      border: none;
+      border-radius: 50%;
+
+      background: rgba(128, 128, 128, 0.12);
+
+      color: var(--text);
+
+      font-size: 30px;
+      line-height: 1;
+
+      cursor: pointer;
+
+      transition: 0.2s;
+    }
+
+    .article-modal-close:hover {
+      transform: rotate(90deg);
+    }
+
+    .article-modal-category {
+      margin-bottom: 12px;
+
+      color: var(--primary);
+
+      font-size: 12px;
+      font-weight: 800;
+
+      letter-spacing: 2px;
+    }
+
+    .article-modal-title {
+      margin: 0 45px 15px 0;
+
+      font-size: clamp(27px, 6vw, 42px);
+
+      line-height: 1.15;
+      letter-spacing: -1.5px;
+    }
+
+    .article-modal-text {
+      margin-bottom: 24px;
+
+      color: var(--muted);
+
+      font-size: 18px;
+
+      line-height: 1.7;
+    }
+
+    .article-modal-content {
+      color: var(--text);
+
+      font-size: 16px;
+
+      line-height: 1.9;
+    }
+
+    .article-modal-box::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .article-modal-box::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+
+      background: rgba(100, 100, 100, 0.3);
+    }
+
+    /* =========================
+       ANIMATION
+    ========================= */
+
+    @keyframes floating {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-15px);
+      }
+    }
+
+    /* =========================
+       TABLET
+    ========================= */
+
+    @media (max-width: 900px) {
+      .hero {
+        gap: 30px;
+      }
+
+      .profile {
+        width: 230px;
+        height: 230px;
+      }
+
+      .about-grid,
+      .articles {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 700px) {
+      header {
+        padding: 12px 5%;
+      }
+
+      header nav {
+        display: none;
+      }
+
+      .theme-button {
+        margin-left: auto;
+        margin-right: 8px;
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+
+      .hero {
+        min-height: auto;
+
+        padding: 125px 5% 75px;
+
+        flex-direction: column-reverse;
+
+        text-align: center;
+      }
+
+      .hero-text {
+        max-width: 100%;
+      }
+
+      .hero h1 {
+        letter-spacing: -2px;
+      }
+
+      .hero p {
+        margin-left: auto;
+        margin-right: auto;
+
+        font-size: 16px;
+      }
+
+      .buttons {
+        justify-content: center;
+      }
+
+      .profile {
+        width: 180px;
+        height: 180px;
+
+        margin: 15px auto 10px;
+      }
+
+      section {
+        padding: 75px 5%;
+      }
+
+      .about-grid,
+      .articles {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        padding: 25px;
+      }
+
+      .article-modal {
+        padding: 12px;
+
+        align-items: flex-end;
+      }
+
+      .article-modal-box {
+        width: 100%;
+        max-height: 88vh;
+
+        padding: 26px 22px 30px;
+
+        border-radius: 24px 24px 18px 18px;
+      }
+
+      .article-modal-title {
+        font-size: 30px;
+      }
+
+      .article-modal-text {
+        font-size: 16px;
+      }
+
+      .article-modal-content {
+        font-size: 15px;
+        line-height: 1.85;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation: none !important;
+        transition: none !important;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<header>
+  <!-- =========================
+       HEADER
+  ========================== -->
 
-  <div class="logo">
-    TI<span>.</span>ID
-  </div>
+  <header>
 
-  <nav>
+    <a href="#home" class="logo">
+      <img src="logo-ti-id.png" alt="Logo TI.ID">
+      TI<span>.ID</span>
+    </a>
+
+    <nav aria-label="Navigasi utama">
+      <a href="#home">Home</a>
+      <a href="#tentang">Tentang</a>
+      <a href="#tulisan">Tulisan</a>
+      <a href="#kontak">Kontak</a>
+    </nav>
+
+    <button
+      class="theme-button"
+      id="themeButton"
+      aria-label="Ganti tema"
+      title="Ganti tema">
+      🌙
+    </button>
+
+    <button
+      class="menu-toggle"
+      id="menuToggle"
+      aria-label="Buka menu"
+      aria-expanded="false">
+      ☰
+    </button>
+
+  </header>
+
+
+  <!-- =========================
+       MOBILE MENU
+  ========================== -->
+
+  <div class="mobile-menu" id="mobileMenu">
+
     <a href="#home">Home</a>
     <a href="#tentang">Tentang</a>
     <a href="#tulisan">Tulisan</a>
     <a href="#kontak">Kontak</a>
-  </nav>
 
-  <button class="menu-toggle" onclick="toggleMenu()">☰</button>
-
-</header>
+  </div>
 
 
-<!-- HERO -->
+  <!-- =========================
+       HERO
+  ========================== -->
 
-<section class="hero" id="home">
+  <section class="hero" id="home">
 
-  <div class="hero-text">
+    <div class="hero-text">
 
-    <div class="badge">
-      WELCOME TO TI.ID
+      <div class="badge">
+        WELCOME TO TI.ID
+      </div>
+
+      <h1>
+        Halo, kami<br>
+        <span>TI.ID.</span>
+      </h1>
+
+      <p>
+        Selamat datang di TI.ID.
+        Sebuah ruang untuk berbagi cerita,
+        pemikiran, pengalaman, dan berbagai
+        konten menarik.
+      </p>
+
+      <div class="buttons">
+
+        <a
+          href="#tulisan"
+          class="btn btn-primary">
+          Lihat Tulisan →
+        </a>
+
+        <a
+          href="#kontak"
+          class="btn btn-secondary">
+          Hubungi Kami
+        </a>
+
+      </div>
+
     </div>
 
-    <h1>
-      Halo, kami<br>
-      <span>TI.ID.</span>
-    </h1>
 
-    <p>
-      Selamat datang di TI.ID.
-      Sebuah ruang untuk berbagi cerita,
-      pemikiran, pengalaman, dan berbagai
-      konten menarik.
+    <div class="profile">
+
+      <img
+        src="logo-ti-id.png"
+        alt="Logo TI.ID">
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       TENTANG
+  ========================== -->
+
+  <section id="tentang" class="reveal">
+
+    <div class="section-label">
+      TENTANG TI.ID
+    </div>
+
+    <h2 class="section-title">
+      Tentang TI.ID.
+    </h2>
+
+    <p class="section-description">
+      TI.ID adalah ruang sederhana untuk berbagi
+      informasi, cerita, pemikiran, dan konten
+      yang menarik.
     </p>
 
-    <div class="buttons">
+    <div class="about-grid">
 
-      <a href="#tulisan" class="btn btn-primary">
-        Lihat Tulisan →
-      </a>
+      <div class="card">
 
-      <a href="#kontak" class="btn btn-secondary">
-        Hubungi Kami
-      </a>
+        <h3>✍️ Tulisan</h3>
+
+        <p>
+          Berbagai tulisan dan catatan yang
+          dibuat untuk dibaca dan dinikmati.
+        </p>
+
+      </div>
+
+
+      <div class="card">
+
+        <h3>💡 Ide</h3>
+
+        <p>
+          Berbagi ide, pemikiran, dan perspektif
+          mengenai berbagai hal.
+        </p>
+
+      </div>
+
+
+      <div class="card">
+
+        <h3>🚀 Berkembang</h3>
+
+        <p>
+          Terus belajar, berkembang, dan membuat
+          sesuatu yang lebih baik.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       TULISAN
+  ========================== -->
+
+  <section id="tulisan" class="reveal">
+
+    <div class="section-label">
+      BLOG & KONTEN
+    </div>
+
+    <h2 class="section-title">
+      Tulisan terbaru.
+    </h2>
+
+    <p class="section-description">
+      Temukan berbagai tulisan dan konten
+      dari TI.ID.
+    </p>
+
+    <div class="articles">
+
+
+      <!-- ARTIKEL 01 -->
+
+      <article class="card">
+
+        <div class="article-number">
+          01
+        </div>
+
+        <div class="article-date">
+          ARTIKEL
+        </div>
+
+        <h3>
+          Memulai Sesuatu yang Baru
+        </h3>
+
+        <p>
+          Setiap perjalanan selalu dimulai
+          dari satu langkah kecil.
+        </p>
+
+        <a
+          href="#"
+          class="article-link"
+          data-article="0">
+          Baca artikel →
+        </a>
+
+      </article>
+
+
+      <!-- ARTIKEL 02 -->
+
+      <article class="card">
+
+        <div class="article-number">
+          02
+        </div>
+
+        <div class="article-date">
+          CATATAN
+        </div>
+
+        <h3>
+          Tentang Sebuah Proses
+        </h3>
+
+        <p>
+          Tidak semua hal harus berjalan cepat.
+          Yang penting adalah terus bergerak.
+        </p>
+
+        <a
+          href="#"
+          class="article-link"
+          data-article="1">
+          Baca artikel →
+        </a>
+
+      </article>
+
+
+      <!-- ARTIKEL 03 -->
+
+      <article class="card">
+
+        <div class="article-number">
+          03
+        </div>
+
+        <div class="article-date">
+          PEMIKIRAN
+        </div>
+
+        <h3>
+          Belajar dari Pengalaman
+        </h3>
+
+        <p>
+          Pengalaman bisa menjadi guru terbaik
+          dalam perjalanan hidup.
+        </p>
+
+        <a
+          href="#"
+          class="article-link"
+          data-article="2">
+          Baca artikel →
+        </a>
+
+      </article>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       KONTAK
+  ========================== -->
+
+  <section
+    class="contact reveal"
+    id="kontak">
+
+    <div class="section-label">
+      KONTAK
+    </div>
+
+    <h2 class="section-title">
+      Mari terhubung.
+    </h2>
+
+    <p class="section-description">
+      Ingin bertanya atau berdiskusi dengan TI.ID?
+      Silakan hubungi kami melalui WhatsApp.
+    </p>
+
+    <a
+      href="https://wa.me/6281298776325"
+      class="btn btn-primary"
+      target="_blank"
+      rel="noopener noreferrer">
+      💬 Chat WhatsApp
+    </a>
+
+  </section>
+
+
+  <!-- =========================
+       FOOTER
+  ========================== -->
+
+  <footer>
+    © 2026 TI.ID — All Rights Reserved.
+  </footer>
+
+
+  <!-- =========================
+       ARTICLE MODAL
+  ========================== -->
+
+  <div
+    class="article-modal"
+    id="articleModal"
+    aria-hidden="true">
+
+    <div
+      class="article-modal-box"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modalTitle">
+
+      <button
+        class="article-modal-close"
+        id="modalClose"
+        aria-label="Tutup artikel">
+        ×
+      </button>
+
+      <div
+        class="article-modal-category"
+        id="modalCategory">
+      </div>
+
+      <h2
+        class="article-modal-title"
+        id="modalTitle">
+      </h2>
+
+      <p
+        class="article-modal-text"
+        id="modalText">
+      </p>
+
+      <div
+        class="article-modal-content"
+        id="modalContent">
+      </div>
 
     </div>
 
   </div>
 
-  <div class="profile">
-    <img src="logo-ti-id.png" alt="Logo TI.ID">
-  </div>
 
-</section>
+  <!-- =========================
+       JAVASCRIPT
+  ========================== -->
 
+  <script>
 
-<!-- TENTANG -->
+    /* =========================
+       MOBILE MENU
+    ========================== */
 
-<section id="tentang" class="reveal">
+    const menuToggle =
+      document.getElementById("menuToggle");
 
-  <div class="section-label">
-    TENTANG TI.ID
-  </div>
+    const mobileMenu =
+      document.getElementById("mobileMenu");
 
-  <h2 class="section-title">
-    Tentang TI.ID.
-  </h2>
 
-  <p class="section-description">
-    TI.ID adalah ruang sederhana untuk berbagi
-    informasi, cerita, pemikiran, dan konten
-    yang menarik.
-  </p>
+    function closeMobileMenu() {
 
-  <div class="about-grid">
+      mobileMenu.classList.remove("show");
 
-    <div class="card">
-      <h3>✍️ Tulisan</h3>
+      menuToggle.setAttribute(
+        "aria-expanded",
+        "false"
+      );
 
-      <p>
-        Berbagai tulisan dan catatan yang
-        dibuat untuk dibaca dan dinikmati.
-      </p>
-    </div>
+      menuToggle.textContent = "☰";
+    }
 
-    <div class="card">
-      <h3>💡 Ide</h3>
 
-      <p>
-        Berbagi ide, pemikiran, dan perspektif
-        mengenai berbagai hal.
-      </p>
-    </div>
+    menuToggle.addEventListener(
+      "click",
+      function () {
 
-    <div class="card">
-      <h3>🚀 Berkembang</h3>
+        const isOpen =
+          mobileMenu.classList.toggle("show");
 
-      <p>
-        Terus belajar, berkembang, dan membuat
-        sesuatu yang lebih baik.
-      </p>
-    </div>
+        menuToggle.setAttribute(
+          "aria-expanded",
+          isOpen
+        );
 
-  </div>
+        menuToggle.textContent =
+          isOpen ? "×" : "☰";
 
-</section>
-
-
-<!-- TULISAN -->
-
-<section id="tulisan" class="reveal">
-
-  <div class="section-label">
-    BLOG & KONTEN
-  </div>
-
-  <h2 class="section-title">
-    Tulisan terbaru.
-  </h2>
-
-  <p class="section-description">
-    Temukan berbagai tulisan dan konten
-    dari TI.ID.
-  </p>
-
-  <div class="articles">
-
-    <article class="card">
-
-      <div class="article-number">
-        01
-      </div>
-
-      <div class="article-date">
-        ARTIKEL
-      </div>
-
-      <h3>
-        Memulai Sesuatu yang Baru
-      </h3>
-
-      <p>
-        Setiap perjalanan selalu dimulai
-        dari satu langkah kecil.
-      </p>
-
-      <a href="#" class="article-link">
-        Baca artikel →
-      </a>
-
-    </article>
-
-
-    <article class="card">
-
-      <div class="article-number">
-        02
-      </div>
-
-      <div class="article-date">
-        CATATAN
-      </div>
-
-      <h3>
-        Tentang Sebuah Proses
-      </h3>
-
-      <p>
-        Tidak semua hal harus berjalan cepat.
-        Yang penting adalah terus bergerak.
-      </p>
-
-      <a href="#" class="article-link">
-        Baca artikel →
-      </a>
-
-    </article>
-
-
-    <article class="card">
-
-      <div class="article-number">
-        03
-      </div>
-
-      <div class="article-date">
-        PEMIKIRAN
-      </div>
-
-      <h3>
-        Belajar dari Pengalaman
-      </h3>
-
-      <p>
-        Pengalaman bisa menjadi guru terbaik
-        dalam perjalanan hidup.
-      </p>
-
-      <a href="#" class="article-link">
-        Baca artikel →
-      </a>
-
-    </article>
-
-  </div>
-
-</section>
-
-
-<!-- KONTAK -->
-
-<section class="contact reveal" id="kontak">
-
-  <div class="section-label">
-    KONTAK
-  </div>
-
-  <h2 class="section-title">
-    Mari terhubung.
-  </h2>
-
-  <p class="section-description">
-    Ingin bertanya atau berdiskusi dengan TI.ID?
-    Silakan hubungi kami melalui WhatsApp.
-  </p>
-
-  <a
-    href="https://wa.me/6281298776325"
-    class="btn btn-primary"
-    target="_blank">
-    💬 Chat WhatsApp
-  </a>
-
-</section>
-
-
-<footer>
-  © 2026 TI.ID — All Rights Reserved.
-</footer>
-
-
-<script>
-
-const elements =
-  document.querySelectorAll(".reveal");
-
-const observer =
-  new IntersectionObserver(entries => {
-
-    entries.forEach(entry => {
-
-      if (entry.isIntersecting) {
-        entry.target.classList.add("show");
       }
+    );
 
+
+    document
+      .querySelectorAll(".mobile-menu a")
+      .forEach(function (link) {
+
+        link.addEventListener(
+          "click",
+          closeMobileMenu
+        );
+
+      });
+
+
+    /* =========================
+       SCROLL REVEAL
+    ========================== */
+
+    const elements =
+      document.querySelectorAll(".reveal");
+
+
+    const observer =
+      new IntersectionObserver(
+        function (entries) {
+
+          entries.forEach(function (entry) {
+
+            if (entry.isIntersecting) {
+
+              entry.target.classList.add("show");
+
+              observer.unobserve(entry.target);
+
+            }
+
+          });
+
+        },
+        {
+          threshold: 0.15
+        }
+      );
+
+
+    elements.forEach(function (element) {
+      observer.observe(element);
     });
 
-  }, {
-    threshold: 0.15
-  });
 
-elements.forEach(element => {
-  observer.observe(element);
-});
+    /* =========================
+       DARK MODE
+    ========================== */
 
+    const themeButton =
+      document.getElementById("themeButton");
 
 
-// ===============================
-// DETAIL ARTIKEL
-// ===============================
+    function updateThemeIcon() {
 
-const articleDetails = [
-  {
-    title: "Memulai Sesuatu yang Baru",
-    category: "ARTIKEL",
-    text: "Setiap perjalanan selalu dimulai dari satu langkah kecil.",
-    content:
-      "Memulai sesuatu yang baru memang tidak selalu mudah. Kadang kita merasa ragu, takut gagal, atau terlalu banyak berpikir sebelum mengambil langkah pertama. Namun, setiap perjalanan besar selalu dimulai dari keberanian untuk mencoba. Tidak perlu menunggu semuanya sempurna. Mulailah dari hal kecil, lakukan dengan konsisten, dan terus belajar dari setiap proses."
-  },
-  {
-    title: "Tentang Sebuah Proses",
-    category: "CATATAN",
-    text: "Tidak semua hal harus berjalan cepat. Yang penting adalah terus bergerak.",
-    content:
-      "Dalam hidup, setiap orang memiliki waktunya masing-masing. Tidak semua hal harus selesai dengan cepat. Ada proses yang membutuhkan waktu, kesabaran, dan banyak percobaan. Yang terpenting bukan seberapa cepat kita sampai, tetapi apakah kita tetap bergerak dan tidak menyerah ketika menghadapi kesulitan."
-  },
-  {
-    title: "Belajar dari Pengalaman",
-    category: "PEMIKIRAN",
-    text: "Pengalaman bisa menjadi guru terbaik dalam perjalanan hidup.",
-    content:
-      "Setiap pengalaman memberikan pelajaran yang berbeda. Kesalahan mengajarkan kita untuk menjadi lebih hati-hati, sedangkan keberhasilan mengajarkan kita untuk terus berkembang. Jangan takut dengan pengalaman yang kurang menyenangkan, karena dari sanalah kita sering menemukan pelajaran yang paling berharga."
-  }
-];
+      const isDark =
+        document.body.classList.contains(
+          "dark-mode"
+        );
 
-
-// Buat modal
-const modal = document.createElement("div");
-
-modal.className = "article-modal";
-
-modal.innerHTML = `
-  <div class="article-modal-box">
-
-    <button class="article-modal-close" aria-label="Tutup">
-      ×
-    </button>
-
-    <div class="article-modal-category"></div>
-
-    <h2 class="article-modal-title"></h2>
-
-    <p class="article-modal-text"></p>
-
-    <div class="article-modal-content"></div>
-
-  </div>
-`;
-
-document.body.appendChild(modal);
-
-
-// Ambil elemen modal
-const modalCategory =
-  modal.querySelector(".article-modal-category");
-
-const modalTitle =
-  modal.querySelector(".article-modal-title");
-
-const modalText =
-  modal.querySelector(".article-modal-text");
-
-const modalContent =
-  modal.querySelector(".article-modal-content");
-
-const closeModal =
-  modal.querySelector(".article-modal-close");
-
-
-// ===============================
-// CSS MODAL
-// ===============================
-
-const modalStyle = document.createElement("style");
-
-modalStyle.textContent = `
-
-.article-modal {
-  position: fixed;
-  inset: 0;
-  z-index: 99999;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  padding: 18px;
-
-  background: rgba(0,0,0,.65);
-  backdrop-filter: blur(10px);
-
-  opacity: 0;
-  visibility: hidden;
-
-  transition:
-    opacity .3s ease,
-    visibility .3s ease;
-}
-
-.article-modal.show {
-  opacity: 1;
-  visibility: visible;
-}
-
-
-.article-modal-box {
-  position: relative;
-
-  width: min(650px, 100%);
-  max-height: 85vh;
-
-  overflow-y: auto;
-
-  background: var(--card, #fff);
-  color: var(--text, #111);
-
-  border: 1px solid var(--border, #ddd);
-  border-radius: 26px;
-
-  padding: 32px;
-
-  box-shadow:
-    0 25px 80px rgba(0,0,0,.30);
-
-  transform: translateY(30px) scale(.97);
-
-  transition:
-    transform .35s ease;
-}
-
-.article-modal.show .article-modal-box {
-  transform: translateY(0) scale(1);
-}
-
-
-/* Tombol X */
-
-.article-modal-close {
-  position: absolute;
-
-  top: 12px;
-  right: 15px;
-
-  width: 42px;
-  height: 42px;
-
-  border: none;
-  border-radius: 50%;
-
-  background: rgba(128,128,128,.12);
-
-  color: var(--text, #111);
-
-  font-size: 30px;
-  line-height: 1;
-
-  cursor: pointer;
-
-  transition: .2s;
-}
-
-.article-modal-close:hover {
-  transform: rotate(90deg);
-}
-
-
-/* Kategori */
-
-.article-modal-category {
-  margin-bottom: 12px;
-
-  color: var(--primary, #6c5ce7);
-
-  font-size: 12px;
-  font-weight: 800;
-
-  letter-spacing: 2px;
-}
-
-
-/* Judul */
-
-.article-modal-title {
-  margin: 0 45px 15px 0;
-
-  font-size: clamp(27px, 6vw, 42px);
-
-  line-height: 1.15;
-}
-
-
-/* Kalimat pembuka */
-
-.article-modal-text {
-  margin-bottom: 24px;
-
-  font-size: 18px;
-
-  line-height: 1.7;
-
-  opacity: .7;
-}
-
-
-/* Isi artikel */
-
-.article-modal-content {
-  font-size: 16px;
-
-  line-height: 1.9;
-
-  opacity: .9;
-}
-
-
-/* Scrollbar */
-
-.article-modal-box::-webkit-scrollbar {
-  width: 6px;
-}
-
-.article-modal-box::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  background: rgba(100,100,100,.3);
-}
-
-
-/* HP */
-
-@media (max-width: 600px) {
-
-  .article-modal {
-    padding: 12px;
-    align-items: flex-end;
-  }
-
-  .article-modal-box {
-    width: 100%;
-    max-height: 88vh;
-
-    padding: 26px 22px 30px;
-
-    border-radius: 24px 24px 18px 18px;
-  }
-
-  .article-modal-title {
-    font-size: 30px;
-  }
-
-  .article-modal-text {
-    font-size: 16px;
-  }
-
-  .article-modal-content {
-    font-size: 15px;
-    line-height: 1.85;
-  }
-
-}
-
-body.modal-open {
-  overflow: hidden;
-}
-
-`;
-
-document.head.appendChild(modalStyle);
-
-
-// ===============================
-// BUKA ARTIKEL
-// ===============================
-
-document.addEventListener("click", function(e) {
-
-  const link = e.target.closest(".article-link");
-
-  if (!link) return;
-
-  e.preventDefault();
-
-  /*
-   * Ambil nomor artikel dari posisi tombol.
-   * Jadi artikel 1, 2, 3 otomatis cocok.
-   */
-
-  const links =
-    document.querySelectorAll(".article-link");
-
-  const index =
-    Array.from(links).indexOf(link);
-
-  const article =
-    articleDetails[index];
-
-  if (!article) return;
-
-
-  modalCategory.textContent =
-    article.category;
-
-  modalTitle.textContent =
-    article.title;
-
-  modalText.textContent =
-    article.text;
-
-  modalContent.textContent =
-    article.content;
-
-
-  modal.classList.add("show");
-
-  document.body.classList.add("modal-open");
-
-});
-
-
-// ===============================
-// TUTUP MODAL
-// ===============================
-
-function hideArticleModal() {
-
-  modal.classList.remove("show");
-
-  document.body.classList.remove("modal-open");
-
-}
-
-
-// Tombol X
-closeModal.addEventListener(
-  "click",
-  hideArticleModal
-);
-
-
-// Klik area gelap
-modal.addEventListener("click", function(e) {
-
-  if (e.target === modal) {
-    hideArticleModal();
-  }
-
-});
-
-
-// Tombol ESC
-document.addEventListener("keydown", function(e) {
-
-  if (e.key === "Escape") {
-    hideArticleModal();
-  }
-
-});
-
-
-// Tombol BACK Android
-history.pushState(null, "", location.href);
-
-window.addEventListener("popstate", function() {
-
-  if (modal.classList.contains("show")) {
-
-    hideArticleModal();
-
-    history.pushState(
-      null,
-      "",
-      location.href
-    );
-
-  }
-
-});
-// ==============================
-// DARK MODE
-// ==============================
-
-const darkModeStyle = document.createElement("style");
-
-darkModeStyle.textContent = `
-body.dark-mode {
-    background: #111111 !important;
-    color: #f5f5f5 !important;
-}
-
-body.dark-mode header {
-    background: #111111 !important;
-    color: #ffffff !important;
-    border-color: #333333 !important;
-}
-
-body.dark-mode section,
-body.dark-mode main {
-    color: #f5f5f5;
-}
-
-body.dark-mode .card,
-body.dark-mode article,
-body.dark-mode .about-card,
-body.dark-mode .contact-card {
-    background: #1b1b1b !important;
-    border-color: #333333 !important;
-    color: #f5f5f5 !important;
-}
-
-body.dark-mode h1,
-body.dark-mode h2,
-body.dark-mode h3,
-body.dark-mode h4,
-body.dark-mode p {
-    color: inherit;
-}
-
-body.dark-mode .section-description,
-body.dark-mode .article-text {
-    color: #bdbdbd !important;
-}
-
-body.dark-mode footer {
-    background: #111111 !important;
-    border-color: #333333 !important;
-    color: #999999 !important;
-}
-
-body.dark-mode .article-modal-box {
-    background: #1b1b1b !important;
-    color: #ffffff !important;
-}
-
-body.dark-mode .article-modal-text {
-    color: #bdbdbd !important;
-}
-
-body.dark-mode .article-modal-content {
-    color: #dddddd !important;
-}
-
-.dark-mode-button {
-    position: fixed;
-    right: 20px;
-    bottom: 20px;
-    width: 48px;
-    height: 48px;
-    border: 1px solid #dddddd;
-    border-radius: 50%;
-    background: #ffffff;
-    color: #111111;
-    font-size: 21px;
-    cursor: pointer;
-    z-index: 9999;
-    box-shadow: 0 5px 20px rgba(0,0,0,.15);
-}
-
-body.dark-mode .dark-mode-button {
-    background: #222222;
-    color: #ffffff;
-    border-color: #444444;
-}
-`;
-
-document.head.appendChild(darkModeStyle);
-
-
-// Tombol Dark Mode
-const darkModeButton = document.createElement("button");
-
-darkModeButton.className = "dark-mode-button";
-darkModeButton.setAttribute("aria-label", "Ganti tema");
-
-darkModeButton.textContent =
-    localStorage.getItem("theme") === "dark" ? "☀️" : "🌙";
-
-document.body.appendChild(darkModeButton);
-
-
-// Tema yang tersimpan
-if (localStorage.getItem("theme") === "dark") {
-    document.body.classList.add("dark-mode");
-}
-
-
-// Klik tombol
-darkModeButton.addEventListener("click", function () {
-
-    document.body.classList.toggle("dark-mode");
-
-    const isDark =
-        document.body.classList.contains("dark-mode");
-
-    localStorage.setItem(
-        "theme",
-        isDark ? "dark" : "light"
-    );
-
-    darkModeButton.textContent =
+      themeButton.textContent =
         isDark ? "☀️" : "🌙";
-});</script>
+
+    }
+
+
+    const savedTheme =
+      localStorage.getItem("theme");
+
+
+    if (savedTheme === "dark") {
+      document.body.classList.add(
+        "dark-mode"
+      );
+    }
+
+
+    updateThemeIcon();
+
+
+    themeButton.addEventListener(
+      "click",
+      function () {
+
+        document.body.classList.toggle(
+          "dark-mode"
+        );
+
+        const isDark =
+          document.body.classList.contains(
+            "dark-mode"
+          );
+
+        localStorage.setItem(
+          "theme",
+          isDark ? "dark" : "light"
+        );
+
+        updateThemeIcon();
+
+      }
+    );
+
+
+    /* =========================
+       DATA ARTIKEL
+    ========================== */
+
+    const articleDetails = [
+
+      {
+        title: "Memulai Sesuatu yang Baru",
+
+        category: "ARTIKEL",
+
+        text:
+          "Setiap perjalanan selalu dimulai dari satu langkah kecil.",
+
+        content:
+          "Memulai sesuatu yang baru memang tidak selalu mudah. Kadang kita merasa ragu, takut gagal, atau terlalu banyak berpikir sebelum mengambil langkah pertama. Namun, setiap perjalanan besar selalu dimulai dari keberanian untuk mencoba. Tidak perlu menunggu semuanya sempurna. Mulailah dari hal kecil, lakukan dengan konsisten, dan terus belajar dari setiap proses."
+      },
+
+
+      {
+        title: "Tentang Sebuah Proses",
+
+        category: "CATATAN",
+
+        text:
+          "Tidak semua hal harus berjalan cepat. Yang penting adalah terus bergerak.",
+
+        content:
+          "Dalam hidup, setiap orang memiliki waktunya masing-masing. Tidak semua hal harus selesai dengan cepat. Ada proses yang membutuhkan waktu, kesabaran, dan banyak percobaan. Yang terpenting bukan seberapa cepat kita sampai, tetapi apakah kita tetap bergerak dan tidak menyerah ketika menghadapi kesulitan."
+      },
+
+
+      {
+        title: "Belajar dari Pengalaman",
+
+        category: "PEMIKIRAN",
+
+        text:
+          "Pengalaman bisa menjadi guru terbaik dalam perjalanan hidup.",
+
+        content:
+          "Setiap pengalaman memberikan pelajaran yang berbeda. Kesalahan mengajarkan kita untuk menjadi lebih hati-hati, sedangkan keberhasilan mengajarkan kita untuk terus berkembang. Jangan takut dengan pengalaman yang kurang menyenangkan, karena dari sanalah kita sering menemukan pelajaran yang paling berharga."
+      }
+
+    ];
+
+
+    /* =========================
+       MODAL ELEMENT
+    ========================== */
+
+    const modal =
+      document.getElementById("articleModal");
+
+    const modalCategory =
+      document.getElementById("modalCategory");
+
+    const modalTitle =
+      document.getElementById("modalTitle");
+
+    const modalText =
+      document.getElementById("modalText");
+
+    const modalContent =
+      document.getElementById("modalContent");
+
+    const modalClose =
+      document.getElementById("modalClose");
+
+
+    /* =========================
+       OPEN ARTICLE
+    ========================== */
+
+    document
+      .querySelectorAll(".article-link")
+      .forEach(function (link) {
+
+        link.addEventListener(
+          "click",
+          function (event) {
+
+            event.preventDefault();
+
+            const index =
+              Number(
+                link.dataset.article
+              );
+
+            const article =
+              articleDetails[index];
+
+
+            if (!article) {
+              return;
+            }
+
+
+            modalCategory.textContent =
+              article.category;
+
+            modalTitle.textContent =
+              article.title;
+
+            modalText.textContent =
+              article.text;
+
+            modalContent.textContent =
+              article.content;
+
+
+            modal.classList.add("show");
+
+            modal.setAttribute(
+              "aria-hidden",
+              "false"
+            );
+
+            document.body.classList.add(
+              "modal-open"
+            );
+
+            modalClose.focus();
+
+          }
+        );
+
+      });
+
+
+    /* =========================
+       CLOSE MODAL
+    ========================== */
+
+    function hideArticleModal() {
+
+      modal.classList.remove("show");
+
+      modal.setAttribute(
+        "aria-hidden",
+        "true"
+      );
+
+      document.body.classList.remove(
+        "modal-open"
+      );
+
+    }
+
+
+    modalClose.addEventListener(
+      "click",
+      hideArticleModal
+    );
+
+
+    modal.addEventListener(
+      "click",
+      function (event) {
+
+        if (event.target === modal) {
+          hideArticleModal();
+        }
+
+      }
+    );
+
+
+    /* =========================
+       ESC KEY
+    ========================== */
+
+    document.addEventListener(
+      "keydown",
+      function (event) {
+
+        if (
+          event.key === "Escape" &&
+          modal.classList.contains("show")
+        ) {
+
+          hideArticleModal();
+
+        }
+
+      }
+    );
+
+
+    /* =========================
+       CLOSE MENU WITH ESC
+    ========================== */
+
+    document.addEventListener(
+      "keydown",
+      function (event) {
+
+        if (
+          event.key === "Escape" &&
+          mobileMenu.classList.contains("show")
+        ) {
+
+          closeMobileMenu();
+
+        }
+
+      }
+    );
+
+
+    /* =========================
+       CLOSE MENU WHEN RESIZE
+    ========================== */
+
+    window.addEventListener(
+      "resize",
+      function () {
+
+        if (window.innerWidth > 700) {
+          closeMobileMenu();
+        }
+
+      }
+    );
+
+  </script>
 
 </body>
 </html>
