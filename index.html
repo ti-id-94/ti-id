@@ -1,1571 +1,1933 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <meta name="description" content="TI.ID — Ruang untuk berbagi cerita, pemikiran, pengalaman, dan berbagai konten menarik.">
-  <meta name="theme-color" content="#6c63ff">
-
-  <title>TI.ID — Personal Portfolio</title>
-
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-
-    :root {
-      --bg: #f7f7f8;
-      --card: #ffffff;
-      --text: #111111;
-      --muted: #707070;
-      --primary: #6c63ff;
-      --primary-dark: #554ce8;
-      --border: #e7e7e7;
-      --header: rgba(255, 255, 255, 0.82);
-      --shadow: rgba(0, 0, 0, 0.08);
-    }
-
-    body.dark-mode {
-      --bg: #0d0d0f;
-      --card: #17171a;
-      --text: #ffffff;
-      --muted: #aaaaaa;
-      --border: #29292d;
-      --header: rgba(13, 13, 15, 0.85);
-      --shadow: rgba(0, 0, 0, 0.35);
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      scroll-behavior: smooth;
-    }
-
-    html {
-      scroll-padding-top: 90px;
-    }
-
-    body {
-      font-family: "Inter", sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      transition: background 0.3s ease, color 0.3s ease;
-      overflow-x: hidden;
-    }
-
-    body.modal-open {
-      overflow: hidden;
-    }
-
-    /* =========================
-       HEADER
-    ========================= */
-
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 1000;
-
-      padding: 15px 7%;
-
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      background: var(--header);
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
-
-      border-bottom: 1px solid var(--border);
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-
-      color: var(--text);
-      text-decoration: none;
-
-      font-size: 23px;
-      font-weight: 800;
-      letter-spacing: -1px;
-    }
-
-    .logo img {
-      width: 42px;
-      height: 42px;
-      object-fit: contain;
-    }
-
-    .logo span {
-      color: var(--primary);
-    }
-
-    nav {
-      display: flex;
-      align-items: center;
-      gap: 25px;
-    }
-
-    nav a {
-      color: var(--text);
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 600;
-
-      transition: color 0.2s ease;
-    }
-
-    nav a:hover {
-      color: var(--primary);
-    }
-
-    .theme-button,
-    .menu-toggle {
-      border: 1px solid var(--border);
-      background: var(--card);
-      color: var(--text);
-
-      width: 40px;
-      height: 40px;
-
-      border-radius: 50%;
-      cursor: pointer;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      font-size: 18px;
-
-      transition: 0.25s;
-    }
-
-    .theme-button:hover,
-    .menu-toggle:hover {
-      transform: translateY(-2px);
-      border-color: var(--primary);
-    }
-
-    .menu-toggle {
-      display: none;
-      font-size: 20px;
-    }
-
-    /* =========================
-       MOBILE MENU
-    ========================= */
-
-    .mobile-menu {
-      position: fixed;
-      top: 73px;
-      left: 5%;
-      right: 5%;
-
-      z-index: 999;
-
-      padding: 12px;
-
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-
-      box-shadow: 0 20px 50px var(--shadow);
-
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(-10px);
-
-      transition: 0.25s ease;
-    }
-
-    .mobile-menu.show {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
-    }
-
-    .mobile-menu a {
-      display: block;
-
-      padding: 14px 16px;
-
-      color: var(--text);
-      text-decoration: none;
-
-      border-radius: 12px;
-
-      font-weight: 600;
-    }
-
-    .mobile-menu a:hover {
-      background: rgba(108, 99, 255, 0.1);
-      color: var(--primary);
-    }
-
-    /* =========================
-       HERO
-    ========================= */
-
-    .hero {
-      min-height: 100vh;
-
-      padding: 140px 7% 80px;
-
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      gap: 50px;
-
-      background:
-        radial-gradient(
-          circle at 80% 20%,
-          rgba(108, 99, 255, 0.18),
-          transparent 30%
-        );
-    }
-
-    .hero-text {
-      max-width: 700px;
-    }
-
-    .badge {
-      display: inline-block;
-
-      padding: 8px 15px;
-      margin-bottom: 20px;
-
-      border-radius: 30px;
-
-      background: rgba(108, 99, 255, 0.1);
-      color: var(--primary);
-
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    .hero h1 {
-      font-size: clamp(45px, 7vw, 80px);
-      line-height: 1.02;
-      letter-spacing: -4px;
-    }
-
-    .hero h1 span {
-      color: var(--primary);
-    }
-
-    .hero p {
-      max-width: 600px;
-
-      margin: 25px 0;
-
-      color: var(--muted);
-
-      font-size: 18px;
-      line-height: 1.8;
-    }
-
-    .buttons {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      display: inline-block;
-
-      padding: 14px 23px;
-
-      border-radius: 12px;
-
-      text-decoration: none;
-
-      font-weight: 700;
-
-      transition: 0.3s;
-    }
-
-    .btn-primary {
-      background: var(--primary);
-      color: #ffffff;
-    }
-
-    .btn-primary:hover {
-      background: var(--primary-dark);
-      transform: translateY(-4px);
-    }
-
-    .btn-secondary {
-      background: var(--card);
-      color: var(--text);
-
-      border: 1px solid var(--border);
-    }
-
-    .btn-secondary:hover {
-      transform: translateY(-4px);
-      border-color: var(--primary);
-    }
-
-    .profile {
-      flex-shrink: 0;
-
-      width: 290px;
-      height: 290px;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      border-radius: 50%;
-
-      background: linear-gradient(
-        135deg,
-        #6c63ff,
-        #9b94ff
-      );
-
-      box-shadow:
-        0 30px 80px rgba(108, 99, 255, 0.25);
-
-      animation: floating 4s ease-in-out infinite;
-    }
-
-    .profile img {
-      width: 75%;
-      height: 75%;
-
-      object-fit: contain;
-
-      border-radius: 50%;
-    }
-
-    /* =========================
-       SECTION
-    ========================= */
-
-    section {
-      padding: 100px 7%;
-    }
-
-    .section-label {
-      margin-bottom: 10px;
-
-      color: var(--primary);
-
-      font-size: 13px;
-      font-weight: 800;
-
-      letter-spacing: 2px;
-    }
-
-    .section-title {
-      margin-bottom: 15px;
-
-      font-size: clamp(32px, 5vw, 50px);
-      line-height: 1.1;
-      letter-spacing: -2px;
-    }
-
-    .section-description {
-      max-width: 650px;
-
-      margin-bottom: 40px;
-
-      color: var(--muted);
-
-      line-height: 1.8;
-    }
-
-    /* =========================
-       ABOUT
-    ========================= */
-
-    .about-grid,
-    .articles {
-      display: grid;
-
-      grid-template-columns: repeat(3, 1fr);
-
-      gap: 22px;
-    }
-
-    .card {
-      padding: 30px;
-
-      background: var(--card);
-
-      border: 1px solid var(--border);
-      border-radius: 20px;
-
-      transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease,
-        border-color 0.3s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-7px);
-
-      box-shadow:
-        0 20px 50px var(--shadow);
-
-      border-color: rgba(108, 99, 255, 0.35);
-    }
-
-    .card h3 {
-      margin-bottom: 12px;
-
-      font-size: 19px;
-    }
-
-    .card p {
-      color: var(--muted);
-
-      line-height: 1.8;
-    }
-
-    /* =========================
-       ARTICLES
-    ========================= */
-
-    .article-number {
-      margin-bottom: 20px;
-
-      color: var(--primary);
-
-      font-size: 40px;
-      font-weight: 800;
-    }
-
-    .article-date {
-      margin-bottom: 12px;
-
-      color: var(--muted);
-
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 1px;
-    }
-
-    .article-link {
-      display: inline-block;
-
-      margin-top: 20px;
-
-      color: var(--primary);
-
-      text-decoration: none;
-
-      font-weight: 700;
-    }
-
-    .article-link:hover {
-      text-decoration: underline;
-    }
-
-    /* =========================
-       CONTACT
-    ========================= */
-
-    .contact {
-      text-align: center;
-
-      background: var(--card);
-
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .contact .section-description {
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    /* =========================
-       FOOTER
-    ========================= */
-
-    footer {
-      padding: 25px;
-
-      text-align: center;
-
-      color: var(--muted);
-
-      font-size: 13px;
-    }
-
-    /* =========================
-       SCROLL ANIMATION
-    ========================= */
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(25px);
-
-      transition:
-        opacity 0.8s ease,
-        transform 0.8s ease;
-    }
-
-    .reveal.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* =========================
-       ARTICLE MODAL
-    ========================= */
-
-    .article-modal {
-      position: fixed;
-      inset: 0;
-
-      z-index: 99999;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      padding: 18px;
-
-      background: rgba(0, 0, 0, 0.65);
-
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-
-      opacity: 0;
-      visibility: hidden;
-
-      transition:
-        opacity 0.3s ease,
-        visibility 0.3s ease;
-    }
-
-    .article-modal.show {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .article-modal-box {
-      position: relative;
-
-      width: min(650px, 100%);
-      max-height: 85vh;
-
-      overflow-y: auto;
-
-      padding: 32px;
-
-      background: var(--card);
-      color: var(--text);
-
-      border: 1px solid var(--border);
-      border-radius: 26px;
-
-      box-shadow:
-        0 25px 80px rgba(0, 0, 0, 0.3);
-
-      transform: translateY(30px) scale(0.97);
-
-      transition: transform 0.35s ease;
-    }
-
-    .article-modal.show .article-modal-box {
-      transform: translateY(0) scale(1);
-    }
-
-    .article-modal-close {
-      position: absolute;
-
-      top: 12px;
-      right: 15px;
-
-      width: 42px;
-      height: 42px;
-
-      border: none;
-      border-radius: 50%;
-
-      background: rgba(128, 128, 128, 0.12);
-
-      color: var(--text);
-
-      font-size: 30px;
-      line-height: 1;
-
-      cursor: pointer;
-
-      transition: 0.2s;
-    }
-
-    .article-modal-close:hover {
-      transform: rotate(90deg);
-    }
-
-    .article-modal-category {
-      margin-bottom: 12px;
-
-      color: var(--primary);
-
-      font-size: 12px;
-      font-weight: 800;
-
-      letter-spacing: 2px;
-    }
-
-    .article-modal-title {
-      margin: 0 45px 15px 0;
-
-      font-size: clamp(27px, 6vw, 42px);
-
-      line-height: 1.15;
-      letter-spacing: -1.5px;
-    }
-
-    .article-modal-text {
-      margin-bottom: 24px;
-
-      color: var(--muted);
-
-      font-size: 18px;
-
-      line-height: 1.7;
-    }
-
-    .article-modal-content {
-      color: var(--text);
-
-      font-size: 16px;
-
-      line-height: 1.9;
-    }
-
-    .article-modal-box::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    .article-modal-box::-webkit-scrollbar-thumb {
-      border-radius: 10px;
-
-      background: rgba(100, 100, 100, 0.3);
-    }
-
-    /* =========================
-       ANIMATION
-    ========================= */
-
-    @keyframes floating {
-      0%,
-      100% {
-        transform: translateY(0);
-      }
-
-      50% {
-        transform: translateY(-15px);
-      }
-    }
-
-    /* =========================
-       TABLET
-    ========================= */
-
-    @media (max-width: 900px) {
-      .hero {
-        gap: 30px;
-      }
-
-      .profile {
-        width: 230px;
-        height: 230px;
-      }
-
-      .about-grid,
-      .articles {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    /* =========================
-       MOBILE
-    ========================= */
-
-    @media (max-width: 700px) {
-      header {
-        padding: 12px 5%;
-      }
-
-      header nav {
-        display: none;
-      }
-
-      .theme-button {
-        margin-left: auto;
-        margin-right: 8px;
-      }
-
-      .menu-toggle {
-        display: flex;
-      }
-
-      .hero {
-        min-height: auto;
-
-        padding: 125px 5% 75px;
-
-        flex-direction: column-reverse;
-
-        text-align: center;
-      }
-
-      .hero-text {
-        max-width: 100%;
-      }
-
-      .hero h1 {
-        letter-spacing: -2px;
-      }
-
-      .hero p {
-        margin-left: auto;
-        margin-right: auto;
-
-        font-size: 16px;
-      }
-
-      .buttons {
-        justify-content: center;
-      }
-
-      .profile {
-        width: 180px;
-        height: 180px;
-
-        margin: 15px auto 10px;
-      }
-
-      section {
-        padding: 75px 5%;
-      }
-
-      .about-grid,
-      .articles {
-        grid-template-columns: 1fr;
-      }
-
-      .card {
-        padding: 25px;
-      }
-
-      .article-modal {
-        padding: 12px;
-
-        align-items: flex-end;
-      }
-
-      .article-modal-box {
-        width: 100%;
-        max-height: 88vh;
-
-        padding: 26px 22px 30px;
-
-        border-radius: 24px 24px 18px 18px;
-      }
-
-      .article-modal-title {
-        font-size: 30px;
-      }
-
-      .article-modal-text {
-        font-size: 16px;
-      }
-
-      .article-modal-content {
-        font-size: 15px;
-        line-height: 1.85;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        scroll-behavior: auto !important;
-        animation: none !important;
-        transition: none !important;
-      }
-
-      .reveal {
-        opacity: 1;
-        transform: none;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="description" content="TI.ID — Ide, Informasi, Inspirasi.">
+<meta name="theme-color" content="#070914">
+
+<title>TI.ID — Ide • Informasi • Inspirasi</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root{
+  --bg:#050711;
+  --bg2:#080b1c;
+  --card:rgba(15,20,48,.72);
+  --card2:rgba(20,25,60,.85);
+  --text:#fff;
+  --muted:#aab1d0;
+  --border:rgba(92,113,220,.45);
+  --blue:#08bfff;
+  --purple:#713cff;
+  --pink:#e52aff;
+  --green:#20d66b;
+  --shadow:0 25px 80px rgba(22,54,180,.25);
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  scroll-behavior:smooth;
+}
+
+html{
+  scroll-padding-top:90px;
+}
+
+body{
+  font-family:Inter,sans-serif;
+  background:
+    radial-gradient(circle at 80% 10%,rgba(46,55,255,.18),transparent 28%),
+    radial-gradient(circle at 10% 45%,rgba(0,174,255,.10),transparent 25%),
+    linear-gradient(135deg,var(--bg),var(--bg2));
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+body:before,
+body:after{
+  content:"";
+  position:fixed;
+  pointer-events:none;
+  z-index:-1;
+  border-radius:50%;
+  filter:blur(70px);
+}
+
+body:before{
+  width:300px;
+  height:300px;
+  background:rgba(92,54,255,.14);
+  top:20%;
+  left:-120px;
+}
+
+body:after{
+  width:400px;
+  height:400px;
+  background:rgba(0,174,255,.08);
+  right:-180px;
+  bottom:5%;
+}
+
+a{
+  color:inherit;
+}
+
+button{
+  font-family:inherit;
+}
+
+/* HEADER */
+
+header{
+  position:fixed;
+  top:10px;
+  left:50%;
+  transform:translateX(-50%);
+  width:min(980px,calc(100% - 30px));
+  height:56px;
+  z-index:1000;
+
+  display:flex;
+  align-items:center;
+  gap:20px;
+
+  padding:7px 12px;
+
+  background:rgba(7,10,25,.72);
+  border:1px solid var(--border);
+  border-radius:30px;
+
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+
+  box-shadow:0 10px 40px rgba(0,0,0,.2);
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:8px;
+
+  text-decoration:none;
+  font-size:21px;
+  font-weight:800;
+  white-space:nowrap;
+}
+
+.logo img{
+  width:38px;
+  height:38px;
+  object-fit:contain;
+}
+
+.logo span{
+  color:#fff;
+}
+
+nav{
+  flex:1;
+  display:flex;
+  justify-content:center;
+  gap:26px;
+}
+
+nav a{
+  text-decoration:none;
+  color:#dce1fa;
+  font-size:12px;
+  font-weight:600;
+  transition:.25s;
+}
+
+nav a:hover{
+  color:#fff;
+}
+
+nav a.active{
+  padding:10px 17px;
+  border-radius:22px;
+  background:linear-gradient(90deg,#5534ff,#6f21ff);
+  box-shadow:0 0 25px rgba(92,58,255,.35);
+}
+
+.header-actions{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.icon-btn,
+.menu-btn{
+  width:36px;
+  height:36px;
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:50%;
+  background:rgba(255,255,255,.05);
+  color:#fff;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.menu-btn{
+  display:none;
+}
+
+/* MOBILE MENU */
+
+.mobile-menu{
+  position:fixed;
+  top:76px;
+  left:15px;
+  right:15px;
+  z-index:999;
+
+  padding:10px;
+
+  background:rgba(8,12,30,.96);
+  border:1px solid var(--border);
+  border-radius:20px;
+
+  box-shadow:var(--shadow);
+
+  opacity:0;
+  visibility:hidden;
+  transform:translateY(-10px);
+  transition:.25s;
+}
+
+.mobile-menu.show{
+  opacity:1;
+  visibility:visible;
+  transform:translateY(0);
+}
+
+.mobile-menu a{
+  display:block;
+  padding:15px;
+  border-radius:12px;
+  text-decoration:none;
+  color:#fff;
+  font-weight:600;
+}
+
+.mobile-menu a:hover{
+  background:rgba(108,80,255,.15);
+}
+
+/* GENERAL */
+
+.container{
+  width:min(970px,90%);
+  margin:auto;
+}
+
+section{
+  padding:85px 0;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+
+  padding:8px 15px;
+
+  border-radius:20px;
+
+  background:linear-gradient(
+    90deg,
+    rgba(102,45,255,.3),
+    rgba(0,170,255,.2)
+  );
+
+  border:1px solid rgba(112,89,255,.5);
+
+  color:#fff;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.3px;
+}
+
+.badge:before{
+  content:"";
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#8d62ff;
+  box-shadow:0 0 12px #8d62ff;
+}
+
+.section-label{
+  display:inline-block;
+  margin-bottom:10px;
+  color:#a5b7ff;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:1px;
+}
+
+.section-title{
+  font-size:clamp(30px,5vw,48px);
+  line-height:1.05;
+  margin-bottom:12px;
+}
+
+.section-description{
+  color:var(--muted);
+  line-height:1.7;
+  font-size:14px;
+}
+
+/* HERO */
+
+.hero{
+  min-height:650px;
+  padding-top:135px;
+  padding-bottom:55px;
+  position:relative;
+}
+
+.hero-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:center;
+  gap:30px;
+}
+
+.hero h1{
+  margin-top:18px;
+  font-size:clamp(52px,7vw,76px);
+  line-height:.98;
+  letter-spacing:-4px;
+}
+
+.hero h1 span{
+  display:block;
+  color:transparent;
+  background:linear-gradient(
+    90deg,
+    #04c8ff,
+    #7650ff,
+    #c83dff
+  );
+  -webkit-background-clip:text;
+  background-clip:text;
+}
+
+.hero-text p{
+  max-width:520px;
+  margin:22px 0;
+  color:#aeb6d6;
+  font-size:14px;
+  line-height:1.7;
+}
+
+.buttons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+
+  min-height:44px;
+  padding:0 22px;
+
+  border-radius:25px;
+
+  text-decoration:none;
+  font-size:12px;
+  font-weight:700;
+
+  transition:.3s;
+}
+
+.btn:hover{
+  transform:translateY(-3px);
+}
+
+.btn-primary{
+  background:linear-gradient(
+    90deg,
+    #009eff,
+    #5d28ff
+  );
+  box-shadow:0 10px 35px rgba(47,91,255,.35);
+}
+
+.btn-secondary{
+  border:1px solid rgba(105,122,230,.6);
+  background:rgba(12,16,40,.6);
+}
+
+.whatsapp-mini{
+  width:270px;
+  margin-top:18px;
+  padding:10px 14px;
+
+  display:flex;
+  align-items:center;
+  gap:12px;
+
+  border:1px solid rgba(0,235,194,.5);
+  border-radius:14px;
+
+  background:linear-gradient(
+    90deg,
+    rgba(0,194,174,.18),
+    rgba(90,38,255,.16)
+  );
+
+  text-decoration:none;
+}
+
+.wa-icon{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:#20d66b;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+}
+
+.whatsapp-mini small{
+  display:block;
+  color:#b9c0da;
+  font-size:10px;
+}
+
+.whatsapp-mini strong{
+  display:block;
+  margin-top:3px;
+  font-size:13px;
+}
+
+/* HERO LOGO */
+
+.hero-art{
+  min-height:380px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+}
+
+.hero-art:before{
+  content:"";
+  position:absolute;
+  width:350px;
+  height:350px;
+  border-radius:50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(39,89,255,.3),
+      transparent 65%
+    );
+
+  filter:blur(10px);
+}
+
+.logo-orbit{
+  width:330px;
+  height:330px;
+  border-radius:50%;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  position:relative;
+
+  background:
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(14,19,50,.98),
+      rgba(5,8,20,.9)
+    );
+
+  border:2px solid transparent;
+
+  box-shadow:
+    0 0 25px #6345ff,
+    0 0 70px rgba(48,69,255,.55),
+    inset 0 0 35px rgba(51,80,255,.25);
+
+  animation:float 5s ease-in-out infinite;
+}
+
+.logo-orbit:before{
+  content:"";
+  position:absolute;
+  inset:-10px;
+  border-radius:50%;
+  border:2px solid transparent;
+  border-top-color:#00c8ff;
+  border-right-color:#7548ff;
+  transform:rotate(-25deg);
+  animation:spin 8s linear infinite;
+}
+
+.logo-orbit:after{
+  content:"";
+  position:absolute;
+  width:450px;
+  height:130px;
+  border:2px solid rgba(93,58,255,.55);
+  border-radius:50%;
+  transform:rotate(-20deg);
+}
+
+.logo-orbit img{
+  width:72%;
+  height:72%;
+  object-fit:contain;
+  position:relative;
+  z-index:2;
+}
+
+/* FEATURE STRIP */
+
+.feature-strip{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+
+  background:rgba(13,18,45,.72);
+
+  border:1px solid var(--border);
+  border-radius:20px;
+
+  overflow:hidden;
+
+  box-shadow:var(--shadow);
+}
+
+.feature{
+  padding:20px 18px;
+
+  display:flex;
+  align-items:center;
+  gap:12px;
+
+  border-right:1px solid rgba(103,119,210,.35);
+}
+
+.feature:last-child{
+  border-right:0;
+}
+
+.feature-icon{
+  flex-shrink:0;
+
+  width:48px;
+  height:48px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:50%;
+
+  background:linear-gradient(
+    135deg,
+    #4330ff,
+    #008fff
+  );
+
+  font-size:22px;
+
+  box-shadow:0 0 25px rgba(54,69,255,.4);
+}
+
+.feature h3{
+  font-size:13px;
+  margin-bottom:4px;
+}
+
+.feature p{
+  color:#aab1cf;
+  font-size:10px;
+  line-height:1.4;
+}
+
+/* ARTICLES */
+
+.articles-head{
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  gap:20px;
+  margin-bottom:22px;
+}
+
+.articles{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+
+.article-card{
+  overflow:hidden;
+  background:rgba(13,18,44,.78);
+  border:1px solid var(--border);
+  border-radius:18px;
+
+  transition:.3s;
+
+  box-shadow:0 12px 40px rgba(0,0,0,.15);
+}
+
+.article-card:hover{
+  transform:translateY(-6px);
+  border-color:#765aff;
+  box-shadow:0 20px 50px rgba(74,66,255,.2);
+}
+
+.article-image{
+  height:125px;
+  position:relative;
+  overflow:hidden;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:48px;
+}
+
+.article-image.one{
+  background:
+    radial-gradient(circle at 70% 30%,#ffb36b,transparent 22%),
+    linear-gradient(135deg,#153f78,#c05b75);
+}
+
+.article-image.two{
+  background:
+    radial-gradient(circle at 30% 20%,#f2c47e,transparent 18%),
+    linear-gradient(135deg,#392718,#132d52);
+}
+
+.article-image.three{
+  background:
+    radial-gradient(circle at 75% 25%,#7abf6b,transparent 20%),
+    linear-gradient(135deg,#142d28,#7a6339);
+}
+
+.article-category{
+  position:absolute;
+  bottom:10px;
+  left:12px;
+
+  padding:5px 10px;
+  border-radius:12px;
+
+  background:rgba(0,0,0,.45);
+  border:1px solid rgba(255,255,255,.2);
+
+  font-size:9px;
+  font-weight:700;
+}
+
+.article-body{
+  padding:17px;
+}
+
+.article-body h3{
+  font-size:15px;
+  margin-bottom:8px;
+}
+
+.article-body p{
+  color:#aab2d0;
+  font-size:11px;
+  line-height:1.6;
+}
+
+.article-meta{
+  margin-top:14px;
+
+  display:flex;
+  justify-content:space-between;
+
+  color:#8992b6;
+  font-size:9px;
+}
+
+.article-link{
+  display:inline-block;
+  margin-top:14px;
+
+  color:#fff;
+  text-decoration:none;
+
+  font-size:11px;
+  font-weight:700;
+}
+
+.article-link:hover{
+  color:#7b6cff;
+}
+
+/* VIDEO */
+
+.video-box{
+  position:relative;
+  overflow:hidden;
+
+  margin-top:25px;
+
+  border:1px solid var(--border);
+  border-radius:22px;
+
+  background:#03050d;
+
+  box-shadow:var(--shadow);
+}
+
+.video-box video{
+  display:block;
+  width:100%;
+  max-height:520px;
+  object-fit:contain;
+  background:#000;
+}
+
+.video-info{
+  padding:18px;
+  background:rgba(11,16,40,.9);
+}
+
+.video-info h3{
+  margin-bottom:7px;
+  font-size:17px;
+}
+
+.video-info p{
+  color:var(--muted);
+  font-size:12px;
+}
+
+/* WHATSAPP CTA */
+
+.contact-box{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:25px;
+
+  padding:25px 30px;
+
+  border:1px solid rgba(80,117,255,.55);
+  border-radius:22px;
+
+  background:
+    radial-gradient(
+      circle at 10% 50%,
+      rgba(0,174,255,.2),
+      transparent 35%
+    ),
+    linear-gradient(
+      90deg,
+      rgba(20,38,110,.8),
+      rgba(52,28,130,.65)
+    );
+
+  box-shadow:var(--shadow);
+}
+
+.contact-left{
+  display:flex;
+  align-items:center;
+  gap:15px;
+}
+
+.contact-icon{
+  width:55px;
+  height:55px;
+  flex-shrink:0;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:50%;
+
+  background:#20d66b;
+  font-size:27px;
+
+  box-shadow:0 0 30px rgba(32,214,107,.3);
+}
+
+.contact-box h2{
+  font-size:21px;
+  margin-bottom:5px;
+}
+
+.contact-box p{
+  color:#b8c0dd;
+  font-size:11px;
+}
+
+/* FOOTER */
+
+footer{
+  padding:28px 0;
+
+  border-top:1px solid rgba(88,105,190,.25);
+
+  color:#8e96b7;
+  font-size:10px;
+}
+
+.footer-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.footer-logo{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:#fff;
+  font-size:16px;
+  font-weight:800;
+}
+
+.footer-logo img{
+  width:30px;
+  height:30px;
+}
+
+.footer-nav{
+  display:flex;
+  gap:20px;
+}
+
+.footer-nav a{
+  text-decoration:none;
+}
+
+.footer-nav a:hover{
+  color:#fff;
+}
+
+/* FLOATING WHATSAPP */
+
+.floating-wa{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  z-index:900;
+
+  width:55px;
+  height:55px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:50%;
+
+  background:#20d66b;
+  color:#fff;
+
+  text-decoration:none;
+  font-size:27px;
+
+  box-shadow:
+    0 0 0 6px rgba(32,214,107,.08),
+    0 10px 30px rgba(32,214,107,.35);
+
+  animation:pulse 2.2s infinite;
+}
+
+/* MODAL */
+
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  padding:15px;
+
+  background:rgba(0,0,0,.75);
+  backdrop-filter:blur(12px);
+
+  opacity:0;
+  visibility:hidden;
+  transition:.3s;
+}
+
+.modal.show{
+  opacity:1;
+  visibility:visible;
+}
+
+.modal-box{
+  width:min(650px,100%);
+  max-height:85vh;
+  overflow:auto;
+
+  padding:30px;
+
+  background:#0d1229;
+  border:1px solid var(--border);
+  border-radius:24px;
+
+  transform:translateY(20px) scale(.97);
+  transition:.3s;
+}
+
+.modal.show .modal-box{
+  transform:none;
+}
+
+.modal-close{
+  float:right;
+
+  width:38px;
+  height:38px;
+
+  border:1px solid var(--border);
+  border-radius:50%;
+
+  background:rgba(255,255,255,.05);
+  color:#fff;
+
+  font-size:25px;
+  cursor:pointer;
+}
+
+.modal-category{
+  margin-bottom:10px;
+  color:#8878ff;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:2px;
+}
+
+.modal h2{
+  margin-bottom:15px;
+  font-size:30px;
+}
+
+.modal-lead{
+  color:#aeb6d5;
+  line-height:1.7;
+  margin-bottom:20px;
+}
+
+.modal-content{
+  color:#d8ddf0;
+  line-height:1.9;
+  font-size:14px;
+}
+
+/* ANIMATION */
+
+.reveal{
+  opacity:0;
+  transform:translateY(25px);
+  transition:.8s ease;
+}
+
+.reveal.show{
+  opacity:1;
+  transform:none;
+}
+
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-12px)}
+}
+
+@keyframes spin{
+  to{transform:rotate(335deg)}
+}
+
+@keyframes pulse{
+  0%,100%{
+    transform:scale(1);
+  }
+  50%{
+    transform:scale(1.08);
+  }
+}
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+  header{
+    width:calc(100% - 20px);
+    top:8px;
+  }
+
+  nav{
+    display:none;
+  }
+
+  .header-actions{
+    margin-left:auto;
+  }
+
+  .menu-btn{
+    display:flex;
+  }
+
+  .hero{
+    padding-top:115px;
+  }
+
+  .hero-grid{
+    grid-template-columns:1fr;
+    text-align:center;
+  }
+
+  .hero-text{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+
+  .hero h1{
+    font-size:54px;
+    letter-spacing:-3px;
+  }
+
+  .hero-text p{
+    font-size:13px;
+  }
+
+  .hero-art{
+    min-height:300px;
+    order:-1;
+  }
+
+  .logo-orbit{
+    width:250px;
+    height:250px;
+  }
+
+  .logo-orbit:after{
+    width:330px;
+  }
+
+  .feature-strip{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .feature{
+    border-bottom:1px solid rgba(103,119,210,.35);
+  }
+
+  .feature:nth-child(2){
+    border-right:0;
+  }
+
+  .feature:nth-child(3),
+  .feature:nth-child(4){
+    border-bottom:0;
+  }
+
+  .articles{
+    grid-template-columns:1fr;
+  }
+
+  .articles-head{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .contact-box{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .contact-box .btn{
+    width:100%;
+  }
+
+  .footer-inner{
+    flex-direction:column;
+    text-align:center;
+  }
+
+  .footer-nav{
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+}
+
+@media(max-width:480px){
+
+  .logo{
+    font-size:18px;
+  }
+
+  .logo img{
+    width:34px;
+    height:34px;
+  }
+
+  .icon-btn{
+    display:none;
+  }
+
+  .hero h1{
+    font-size:46px;
+  }
+
+  .buttons{
+    width:100%;
+  }
+
+  .buttons .btn{
+    flex:1;
+  }
+
+  .whatsapp-mini{
+    width:100%;
+  }
+
+  .feature{
+    padding:16px 12px;
+  }
+
+  .feature-icon{
+    width:40px;
+    height:40px;
+    font-size:18px;
+  }
+
+  .feature h3{
+    font-size:11px;
+  }
+
+  .feature p{
+    font-size:8px;
+  }
+
+  .contact-box{
+    padding:20px;
+  }
+
+  .modal-box{
+    padding:23px;
+    border-radius:20px;
+  }
+
+  .modal h2{
+    font-size:25px;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <!-- =========================
-       HEADER
-  ========================== -->
+<!-- HEADER -->
 
-  <header>
+<header>
 
-    <a href="#home" class="logo">
-      <img src="logo-ti-id.png" alt="Logo TI.ID">
-      TI<span>.ID</span>
-    </a>
+  <a href="#home" class="logo">
+    <img src="logo-ti-id.png" alt="TI.ID">
+    <span>TI.ID</span>
+  </a>
 
-    <nav aria-label="Navigasi utama">
-      <a href="#home">Home</a>
-      <a href="#tentang">Tentang</a>
-      <a href="#tulisan">Tulisan</a>
-      <a href="#kontak">Kontak</a>
-    </nav>
-
-    <button
-      class="theme-button"
-      id="themeButton"
-      aria-label="Ganti tema"
-      title="Ganti tema">
-      🌙
-    </button>
-
-    <button
-      class="menu-toggle"
-      id="menuToggle"
-      aria-label="Buka menu"
-      aria-expanded="false">
-      ☰
-    </button>
-
-  </header>
-
-
-  <!-- =========================
-       MOBILE MENU
-  ========================== -->
-
-  <div class="mobile-menu" id="mobileMenu">
-
-    <a href="#home">Home</a>
+  <nav>
+    <a href="#home" class="active">Beranda</a>
     <a href="#tentang">Tentang</a>
     <a href="#tulisan">Tulisan</a>
+    <a href="#video">Layanan</a>
     <a href="#kontak">Kontak</a>
+  </nav>
 
+  <div class="header-actions">
+    <button class="icon-btn" id="themeBtn">☀️</button>
+
+    <button
+      class="menu-btn"
+      id="menuBtn"
+      aria-label="Menu">
+      ☰
+    </button>
   </div>
 
+</header>
 
-  <!-- =========================
-       HERO
-  ========================== -->
 
-  <section class="hero" id="home">
+<!-- MOBILE MENU -->
 
-    <div class="hero-text">
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#home">Beranda</a>
+  <a href="#tentang">Tentang</a>
+  <a href="#tulisan">Tulisan</a>
+  <a href="#video">Layanan</a>
+  <a href="#kontak">Kontak</a>
+</div>
+
+
+<main>
+
+<!-- HERO -->
+
+<section class="hero" id="home">
+
+  <div class="container hero-grid">
+
+    <div class="hero-text reveal">
 
       <div class="badge">
         WELCOME TO TI.ID
       </div>
 
       <h1>
-        Halo, kami<br>
+        Halo, kami
         <span>TI.ID.</span>
       </h1>
 
       <p>
-        Selamat datang di TI.ID.
         Sebuah ruang untuk berbagi cerita,
-        pemikiran, pengalaman, dan berbagai
-        konten menarik.
+        pemikiran, pengalaman dan berbagai
+        konten menarik yang bisa memberi
+        manfaat dan inspirasi.
       </p>
 
       <div class="buttons">
 
-        <a
-          href="#tulisan"
-          class="btn btn-primary">
-          Lihat Tulisan →
+        <a href="#tulisan" class="btn btn-primary">
+          → &nbsp; Lihat Tulisan
         </a>
 
-        <a
-          href="#kontak"
-          class="btn btn-secondary">
-          Hubungi Kami
+        <a href="#tentang" class="btn btn-secondary">
+          ♙ &nbsp; Tentang Kami
         </a>
 
       </div>
 
-    </div>
+      <a
+        class="whatsapp-mini"
+        href="https://wa.me/6281298776325"
+        target="_blank"
+        rel="noopener">
 
+        <div class="wa-icon">◉</div>
 
-    <div class="profile">
-
-      <img
-        src="logo-ti-id.png"
-        alt="Logo TI.ID">
-
-    </div>
-
-  </section>
-
-
-  <!-- =========================
-       TENTANG
-  ========================== -->
-
-  <section id="tentang" class="reveal">
-
-    <div class="section-label">
-      TENTANG TI.ID
-    </div>
-
-    <h2 class="section-title">
-      Tentang TI.ID.
-    </h2>
-
-    <p class="section-description">
-      TI.ID adalah ruang sederhana untuk berbagi
-      informasi, cerita, pemikiran, dan konten
-      yang menarik.
-    </p>
-
-    <div class="about-grid">
-
-      <div class="card">
-
-        <h3>✍️ Tulisan</h3>
-
-        <p>
-          Berbagai tulisan dan catatan yang
-          dibuat untuk dibaca dan dinikmati.
-        </p>
-
-      </div>
-
-
-      <div class="card">
-
-        <h3>💡 Ide</h3>
-
-        <p>
-          Berbagi ide, pemikiran, dan perspektif
-          mengenai berbagai hal.
-        </p>
-
-      </div>
-
-
-      <div class="card">
-
-        <h3>🚀 Berkembang</h3>
-
-        <p>
-          Terus belajar, berkembang, dan membuat
-          sesuatu yang lebih baik.
-        </p>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- =========================
-       TULISAN
-  ========================== -->
-
-  <section id="tulisan" class="reveal">
-
-    <div class="section-label">
-      BLOG & KONTEN
-    </div>
-
-    <h2 class="section-title">
-      Tulisan terbaru.
-    </h2>
-
-    <p class="section-description">
-      Temukan berbagai tulisan dan konten
-      dari TI.ID.
-    </p>
-
-    <div class="articles">
-
-
-      <!-- ARTIKEL 01 -->
-
-      <article class="card">
-
-        <div class="article-number">
-          01
+        <div>
+          <small>Chat WhatsApp</small>
+          <strong>0812 9877 6325</strong>
         </div>
 
-        <div class="article-date">
-          ARTIKEL
-        </div>
+        <span style="margin-left:auto;font-size:20px">→</span>
 
-        <h3>
-          Memulai Sesuatu yang Baru
-        </h3>
-
-        <p>
-          Setiap perjalanan selalu dimulai
-          dari satu langkah kecil.
-        </p>
-
-        <a
-          href="#"
-          class="article-link"
-          data-article="0">
-          Baca artikel →
-        </a>
-
-      </article>
-
-
-      <!-- ARTIKEL 02 -->
-
-      <article class="card">
-
-        <div class="article-number">
-          02
-        </div>
-
-        <div class="article-date">
-          CATATAN
-        </div>
-
-        <h3>
-          Tentang Sebuah Proses
-        </h3>
-
-        <p>
-          Tidak semua hal harus berjalan cepat.
-          Yang penting adalah terus bergerak.
-        </p>
-
-        <a
-          href="#"
-          class="article-link"
-          data-article="1">
-          Baca artikel →
-        </a>
-
-      </article>
-
-
-      <!-- ARTIKEL 03 -->
-
-      <article class="card">
-
-        <div class="article-number">
-          03
-        </div>
-
-        <div class="article-date">
-          PEMIKIRAN
-        </div>
-
-        <h3>
-          Belajar dari Pengalaman
-        </h3>
-
-        <p>
-          Pengalaman bisa menjadi guru terbaik
-          dalam perjalanan hidup.
-        </p>
-
-        <a
-          href="#"
-          class="article-link"
-          data-article="2">
-          Baca artikel →
-        </a>
-
-      </article>
+      </a>
 
     </div>
 
-  </section>
 
+    <div class="hero-art reveal">
 
-  <!-- =========================
-       KONTAK
-  ========================== -->
-
-  <section
-    class="contact reveal"
-    id="kontak">
-
-    <div class="section-label">
-      KONTAK
-    </div>
-
-    <h2 class="section-title">
-      Mari terhubung.
-    </h2>
-
-    <p class="section-description">
-      Ingin bertanya atau berdiskusi dengan TI.ID?
-      Silakan hubungi kami melalui WhatsApp.
-    </p>
-
-    <a
-      href="https://wa.me/6281298776325"
-      class="btn btn-primary"
-      target="_blank"
-      rel="noopener noreferrer">
-      💬 Chat WhatsApp
-    </a>
-
-  </section>
-
-
-  <!-- =========================
-       FOOTER
-  ========================== -->
-
-  <footer>
-    © 2026 TI.ID — All Rights Reserved.
-  </footer>
-
-
-  <!-- =========================
-       ARTICLE MODAL
-  ========================== -->
-
-  <div
-    class="article-modal"
-    id="articleModal"
-    aria-hidden="true">
-
-    <div
-      class="article-modal-box"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="modalTitle">
-
-      <button
-        class="article-modal-close"
-        id="modalClose"
-        aria-label="Tutup artikel">
-        ×
-      </button>
-
-      <div
-        class="article-modal-category"
-        id="modalCategory">
-      </div>
-
-      <h2
-        class="article-modal-title"
-        id="modalTitle">
-      </h2>
-
-      <p
-        class="article-modal-text"
-        id="modalText">
-      </p>
-
-      <div
-        class="article-modal-content"
-        id="modalContent">
+      <div class="logo-orbit">
+        <img
+          src="logo-ti-id.png"
+          alt="Logo TI.ID">
       </div>
 
     </div>
 
   </div>
 
-
-  <!-- =========================
-       JAVASCRIPT
-  ========================== -->
-
-  <script>
-
-    /* =========================
-       MOBILE MENU
-    ========================== */
-
-    const menuToggle =
-      document.getElementById("menuToggle");
-
-    const mobileMenu =
-      document.getElementById("mobileMenu");
+</section>
 
 
-    function closeMobileMenu() {
+<!-- FEATURE -->
+
+<section id="tentang" style="padding-top:15px">
+
+  <div class="container">
+
+    <div class="feature-strip reveal">
+
+      <div class="feature">
+        <div class="feature-icon">✎</div>
+        <div>
+          <h3>Menulis</h3>
+          <p>Berbagi tulisan, cerita dan catatan.</p>
+        </div>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">💡</div>
+        <div>
+          <h3>Berbagi Ide</h3>
+          <p>Bertukar pemikiran, memperluas wawasan.</p>
+        </div>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">🚀</div>
+        <div>
+          <h3>Berkembang</h3>
+          <p>Terus belajar dan menciptakan hal baru.</p>
+        </div>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">♥</div>
+        <div>
+          <h3>Memberi Manfaat</h3>
+          <p>Membuat konten yang bermanfaat.</p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ARTIKEL -->
+
+<section id="tulisan">
+
+  <div class="container reveal">
+
+    <div class="articles-head">
+
+      <div>
+        <div class="badge">ARTIKEL TERBARU</div>
+
+        <h2 class="section-title" style="margin-top:10px">
+          Tulisan Pilihan
+        </h2>
+
+        <p class="section-description">
+          Kumpulan tulisan dan konten menarik dari TI.ID.
+        </p>
+      </div>
+
+      <a href="#tulisan" class="btn btn-secondary">
+        Lihat Semua →
+      </a>
+
+    </div>
+
+
+    <div class="articles">
+
+      <article class="article-card">
+
+        <div class="article-image one">
+          🏔️
+          <span class="article-category">
+            Motivasi
+          </span>
+        </div>
+
+        <div class="article-body">
+
+          <h3>
+            Memulai Sesuatu yang Baru
+          </h3>
+
+          <p>
+            Setiap perjalanan besar selalu dimulai
+            dari satu langkah kecil. Berani melangkah
+            adalah kunci.
+          </p>
+
+          <div class="article-meta">
+            <span>▣ 12 Mei 2025</span>
+            <span>◷ 5 menit</span>
+          </div>
+
+          <a
+            href="#"
+            class="article-link"
+            data-article="0">
+            Baca artikel →
+          </a>
+
+        </div>
+
+      </article>
+
+
+      <article class="article-card">
+
+        <div class="article-image two">
+          ☕
+          <span class="article-category">
+            Catatan
+          </span>
+        </div>
+
+        <div class="article-body">
+
+          <h3>
+            Tentang Sebuah Proses
+          </h3>
+
+          <p>
+            Tidak semua hal harus berjalan cepat.
+            Yang penting adalah terus bergerak.
+          </p>
+
+          <div class="article-meta">
+            <span>▣ 8 Mei 2025</span>
+            <span>◷ 4 menit</span>
+          </div>
+
+          <a
+            href="#"
+            class="article-link"
+            data-article="1">
+            Baca artikel →
+          </a>
+
+        </div>
+
+      </article>
+
+
+      <article class="article-card">
+
+        <div class="article-image three">
+          📚
+          <span class="article-category">
+            Pemikiran
+          </span>
+        </div>
+
+        <div class="article-body">
+
+          <h3>
+            Belajar dari Pengalaman
+          </h3>
+
+          <p>
+            Pengalaman sering kali menjadi guru
+            terbaik dalam perjalanan hidup.
+          </p>
+
+          <div class="article-meta">
+            <span>▣ 1 Mei 2025</span>
+            <span>◷ 6 menit</span>
+          </div>
+
+          <a
+            href="#"
+            class="article-link"
+            data-article="2">
+            Baca artikel →
+          </a>
+
+        </div>
+
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- VIDEO -->
+
+<section id="video">
+
+  <div class="container reveal">
+
+    <div class="section-label">
+      VIDEO & KONTEN
+    </div>
+
+    <h2 class="section-title">
+      Lihat lebih dekat TI.ID.
+    </h2>
+
+    <p class="section-description">
+      Video dan konten visual dari TI.ID.
+    </p>
+
+    <div class="video-box">
+
+      <video
+        controls
+        preload="metadata"
+        playsinline
+        poster="logo-ti-id.png">
+
+        <source
+          src="1000226921.mp4"
+          type="video/mp4">
+
+        Browser kamu tidak mendukung video.
+
+      </video>
+
+      <div class="video-info">
+
+        <h3>
+          Video TI.ID
+        </h3>
+
+        <p>
+          Nikmati konten TI.ID langsung dari website.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- CONTACT -->
+
+<section id="kontak">
+
+  <div class="container reveal">
+
+    <div class="contact-box">
+
+      <div class="contact-left">
+
+        <div class="contact-icon">
+          ◉
+        </div>
+
+        <div>
+
+          <h2>
+            Mari Terhubung
+          </h2>
+
+          <p>
+            Punya pertanyaan, ide, atau ingin berdiskusi?
+            Hubungi kami melalui WhatsApp.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <a
+        href="https://wa.me/6281298776325"
+        class="btn"
+        target="_blank"
+        rel="noopener"
+        style="
+          background:#20d66b;
+          min-width:220px;
+        ">
+
+        ◉ &nbsp; Chat WhatsApp →
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+  <div class="container footer-inner">
+
+    <div class="footer-logo">
+
+      <img
+        src="logo-ti-id.png"
+        alt="TI.ID">
+
+      TI.ID
+
+    </div>
+
+    <div>
+      IDE • INFORMASI • INSPIRASI
+    </div>
+
+    <div class="footer-nav">
+      <a href="#home">Beranda</a>
+      <a href="#tentang">Tentang</a>
+      <a href="#tulisan">Tulisan</a>
+      <a href="#kontak">Kontak</a>
+    </div>
+
+    <div>
+      © 2026 TI.ID — All Rights Reserved.
+    </div>
+
+  </div>
+
+</footer>
+
+
+<!-- FLOATING WHATSAPP -->
+
+<a
+  href="https://wa.me/6281298776325"
+  class="floating-wa"
+  target="_blank"
+  rel="noopener"
+  aria-label="Chat WhatsApp">
+  ◉
+</a>
+
+
+<!-- ARTICLE MODAL -->
+
+<div class="modal" id="articleModal">
+
+  <div class="modal-box">
+
+    <button
+      class="modal-close"
+      id="modalClose">
+      ×
+    </button>
+
+    <div
+      class="modal-category"
+      id="modalCategory">
+    </div>
+
+    <h2 id="modalTitle"></h2>
+
+    <p
+      class="modal-lead"
+      id="modalLead">
+    </p>
+
+    <div
+      class="modal-content"
+      id="modalContent">
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+/* MOBILE MENU */
+
+const menuBtn =
+  document.getElementById("menuBtn");
+
+const mobileMenu =
+  document.getElementById("mobileMenu");
+
+menuBtn.addEventListener("click", () => {
+
+  const open =
+    mobileMenu.classList.toggle("show");
+
+  menuBtn.textContent =
+    open ? "×" : "☰";
+
+});
+
+document
+  .querySelectorAll(".mobile-menu a")
+  .forEach(link => {
+
+    link.addEventListener("click", () => {
 
       mobileMenu.classList.remove("show");
 
-      menuToggle.setAttribute(
-        "aria-expanded",
-        "false"
-      );
+      menuBtn.textContent = "☰";
 
-      menuToggle.textContent = "☰";
-    }
-
-
-    menuToggle.addEventListener(
-      "click",
-      function () {
-
-        const isOpen =
-          mobileMenu.classList.toggle("show");
-
-        menuToggle.setAttribute(
-          "aria-expanded",
-          isOpen
-        );
-
-        menuToggle.textContent =
-          isOpen ? "×" : "☰";
-
-      }
-    );
-
-
-    document
-      .querySelectorAll(".mobile-menu a")
-      .forEach(function (link) {
-
-        link.addEventListener(
-          "click",
-          closeMobileMenu
-        );
-
-      });
-
-
-    /* =========================
-       SCROLL REVEAL
-    ========================== */
-
-    const elements =
-      document.querySelectorAll(".reveal");
-
-
-    const observer =
-      new IntersectionObserver(
-        function (entries) {
-
-          entries.forEach(function (entry) {
-
-            if (entry.isIntersecting) {
-
-              entry.target.classList.add("show");
-
-              observer.unobserve(entry.target);
-
-            }
-
-          });
-
-        },
-        {
-          threshold: 0.15
-        }
-      );
-
-
-    elements.forEach(function (element) {
-      observer.observe(element);
     });
 
-
-    /* =========================
-       DARK MODE
-    ========================== */
-
-    const themeButton =
-      document.getElementById("themeButton");
+  });
 
 
-    function updateThemeIcon() {
+/* DARK MODE */
 
-      const isDark =
-        document.body.classList.contains(
-          "dark-mode"
-        );
+const themeBtn =
+  document.getElementById("themeBtn");
 
-      themeButton.textContent =
-        isDark ? "☀️" : "🌙";
+let dark =
+  localStorage.getItem("ti-theme") !== "light";
+
+function updateTheme(){
+
+  if(dark){
+
+    document.documentElement.style.setProperty(
+      "--bg","#050711"
+    );
+
+    themeBtn.textContent = "☀️";
+
+  }else{
+
+    document.documentElement.style.setProperty(
+      "--bg","#f4f5fb"
+    );
+
+    document.body.style.color="#111";
+
+    themeBtn.textContent = "🌙";
+
+  }
+
+}
+
+updateTheme();
+
+themeBtn.addEventListener("click",()=>{
+
+  dark=!dark;
+
+  localStorage.setItem(
+    "ti-theme",
+    dark ? "dark" : "light"
+  );
+
+  if(!dark){
+
+    document.body.style.background=
+      "linear-gradient(135deg,#f4f5fb,#e9ecf8)";
+
+    document.body.style.color="#111";
+
+  }else{
+
+    document.body.style.background="";
+
+    document.body.style.color="";
+
+  }
+
+  updateTheme();
+
+});
+
+
+/* SCROLL REVEAL */
+
+const reveal =
+  document.querySelectorAll(".reveal");
+
+const observer =
+  new IntersectionObserver(entries => {
+
+    entries.forEach(entry => {
+
+      if(entry.isIntersecting){
+
+        entry.target.classList.add("show");
+
+        observer.unobserve(entry.target);
+
+      }
+
+    });
+
+  },{
+    threshold:.12
+  });
+
+reveal.forEach(el =>
+  observer.observe(el)
+);
+
+
+/* ARTICLES */
+
+const articles = [
+
+  {
+    category:"MOTIVASI",
+    title:"Memulai Sesuatu yang Baru",
+    lead:"Setiap perjalanan selalu dimulai dari satu langkah kecil.",
+    content:
+      "Memulai sesuatu yang baru memang tidak selalu mudah. Kadang kita merasa ragu, takut gagal, atau terlalu banyak berpikir sebelum mengambil langkah pertama. Namun, setiap perjalanan besar selalu dimulai dari keberanian untuk mencoba. Tidak perlu menunggu semuanya sempurna. Mulailah dari hal kecil, lakukan dengan konsisten, dan terus belajar dari setiap proses."
+  },
+
+  {
+    category:"CATATAN",
+    title:"Tentang Sebuah Proses",
+    lead:"Tidak semua hal harus berjalan cepat. Yang penting adalah terus bergerak.",
+    content:
+      "Dalam hidup, setiap orang memiliki waktunya masing-masing. Tidak semua hal harus selesai dengan cepat. Ada proses yang membutuhkan waktu, kesabaran, dan banyak percobaan. Yang terpenting bukan seberapa cepat kita sampai, tetapi apakah kita tetap bergerak dan tidak menyerah ketika menghadapi kesulitan."
+  },
+
+  {
+    category:"PEMIKIRAN",
+    title:"Belajar dari Pengalaman",
+    lead:"Pengalaman bisa menjadi guru terbaik dalam perjalanan hidup.",
+    content:
+      "Setiap pengalaman memberikan pelajaran yang berbeda. Kesalahan mengajarkan kita untuk menjadi lebih hati-hati, sedangkan keberhasilan mengajarkan kita untuk terus berkembang. Jangan takut dengan pengalaman yang kurang menyenangkan, karena dari sanalah kita sering menemukan pelajaran yang paling berharga."
+  }
+
+];
+
+
+const modal =
+  document.getElementById("articleModal");
+
+const modalClose =
+  document.getElementById("modalClose");
+
+const modalCategory =
+  document.getElementById("modalCategory");
+
+const modalTitle =
+  document.getElementById("modalTitle");
+
+const modalLead =
+  document.getElementById("modalLead");
+
+const modalContent =
+  document.getElementById("modalContent");
+
+
+document
+  .querySelectorAll(".article-link")
+  .forEach(link => {
+
+    link.addEventListener("click",e => {
+
+      e.preventDefault();
+
+      const article =
+        articles[
+          Number(link.dataset.article)
+        ];
+
+      if(!article) return;
+
+      modalCategory.textContent =
+        article.category;
+
+      modalTitle.textContent =
+        article.title;
+
+      modalLead.textContent =
+        article.lead;
+
+      modalContent.textContent =
+        article.content;
+
+      modal.classList.add("show");
+
+      document.body.style.overflow="hidden";
+
+    });
+
+  });
+
+
+function closeModal(){
+
+  modal.classList.remove("show");
+
+  document.body.style.overflow="";
+
+}
+
+modalClose.addEventListener(
+  "click",
+  closeModal
+);
+
+modal.addEventListener("click",e=>{
+
+  if(e.target===modal){
+    closeModal();
+  }
+
+});
+
+document.addEventListener("keydown",e=>{
+
+  if(e.key==="Escape"){
+    closeModal();
+  }
+
+});
+
+
+/* ACTIVE NAV */
+
+const sections =
+  document.querySelectorAll("main section");
+
+const navLinks =
+  document.querySelectorAll("nav a");
+
+window.addEventListener("scroll",()=>{
+
+  let current="home";
+
+  sections.forEach(section=>{
+
+    const top =
+      section.offsetTop - 150;
+
+    if(window.scrollY >= top){
+      current=section.id;
+    }
+
+  });
+
+  navLinks.forEach(link=>{
+
+    link.classList.remove("active");
+
+    if(
+      link.getAttribute("href") ===
+      "#" + current
+    ){
+
+      link.classList.add("active");
 
     }
 
+  });
 
-    const savedTheme =
-      localStorage.getItem("theme");
+});
 
-
-    if (savedTheme === "dark") {
-      document.body.classList.add(
-        "dark-mode"
-      );
-    }
-
-
-    updateThemeIcon();
-
-
-    themeButton.addEventListener(
-      "click",
-      function () {
-
-        document.body.classList.toggle(
-          "dark-mode"
-        );
-
-        const isDark =
-          document.body.classList.contains(
-            "dark-mode"
-          );
-
-        localStorage.setItem(
-          "theme",
-          isDark ? "dark" : "light"
-        );
-
-        updateThemeIcon();
-
-      }
-    );
-
-
-    /* =========================
-       DATA ARTIKEL
-    ========================== */
-
-    const articleDetails = [
-
-      {
-        title: "Memulai Sesuatu yang Baru",
-
-        category: "ARTIKEL",
-
-        text:
-          "Setiap perjalanan selalu dimulai dari satu langkah kecil.",
-
-        content:
-          "Memulai sesuatu yang baru memang tidak selalu mudah. Kadang kita merasa ragu, takut gagal, atau terlalu banyak berpikir sebelum mengambil langkah pertama. Namun, setiap perjalanan besar selalu dimulai dari keberanian untuk mencoba. Tidak perlu menunggu semuanya sempurna. Mulailah dari hal kecil, lakukan dengan konsisten, dan terus belajar dari setiap proses."
-      },
-
-
-      {
-        title: "Tentang Sebuah Proses",
-
-        category: "CATATAN",
-
-        text:
-          "Tidak semua hal harus berjalan cepat. Yang penting adalah terus bergerak.",
-
-        content:
-          "Dalam hidup, setiap orang memiliki waktunya masing-masing. Tidak semua hal harus selesai dengan cepat. Ada proses yang membutuhkan waktu, kesabaran, dan banyak percobaan. Yang terpenting bukan seberapa cepat kita sampai, tetapi apakah kita tetap bergerak dan tidak menyerah ketika menghadapi kesulitan."
-      },
-
-
-      {
-        title: "Belajar dari Pengalaman",
-
-        category: "PEMIKIRAN",
-
-        text:
-          "Pengalaman bisa menjadi guru terbaik dalam perjalanan hidup.",
-
-        content:
-          "Setiap pengalaman memberikan pelajaran yang berbeda. Kesalahan mengajarkan kita untuk menjadi lebih hati-hati, sedangkan keberhasilan mengajarkan kita untuk terus berkembang. Jangan takut dengan pengalaman yang kurang menyenangkan, karena dari sanalah kita sering menemukan pelajaran yang paling berharga."
-      }
-
-    ];
-
-
-    /* =========================
-       MODAL ELEMENT
-    ========================== */
-
-    const modal =
-      document.getElementById("articleModal");
-
-    const modalCategory =
-      document.getElementById("modalCategory");
-
-    const modalTitle =
-      document.getElementById("modalTitle");
-
-    const modalText =
-      document.getElementById("modalText");
-
-    const modalContent =
-      document.getElementById("modalContent");
-
-    const modalClose =
-      document.getElementById("modalClose");
-
-
-    /* =========================
-       OPEN ARTICLE
-    ========================== */
-
-    document
-      .querySelectorAll(".article-link")
-      .forEach(function (link) {
-
-        link.addEventListener(
-          "click",
-          function (event) {
-
-            event.preventDefault();
-
-            const index =
-              Number(
-                link.dataset.article
-              );
-
-            const article =
-              articleDetails[index];
-
-
-            if (!article) {
-              return;
-            }
-
-
-            modalCategory.textContent =
-              article.category;
-
-            modalTitle.textContent =
-              article.title;
-
-            modalText.textContent =
-              article.text;
-
-            modalContent.textContent =
-              article.content;
-
-
-            modal.classList.add("show");
-
-            modal.setAttribute(
-              "aria-hidden",
-              "false"
-            );
-
-            document.body.classList.add(
-              "modal-open"
-            );
-
-            modalClose.focus();
-
-          }
-        );
-
-      });
-
-
-    /* =========================
-       CLOSE MODAL
-    ========================== */
-
-    function hideArticleModal() {
-
-      modal.classList.remove("show");
-
-      modal.setAttribute(
-        "aria-hidden",
-        "true"
-      );
-
-      document.body.classList.remove(
-        "modal-open"
-      );
-
-    }
-
-
-    modalClose.addEventListener(
-      "click",
-      hideArticleModal
-    );
-
-
-    modal.addEventListener(
-      "click",
-      function (event) {
-
-        if (event.target === modal) {
-          hideArticleModal();
-        }
-
-      }
-    );
-
-
-    /* =========================
-       ESC KEY
-    ========================== */
-
-    document.addEventListener(
-      "keydown",
-      function (event) {
-
-        if (
-          event.key === "Escape" &&
-          modal.classList.contains("show")
-        ) {
-
-          hideArticleModal();
-
-        }
-
-      }
-    );
-
-
-    /* =========================
-       CLOSE MENU WITH ESC
-    ========================== */
-
-    document.addEventListener(
-      "keydown",
-      function (event) {
-
-        if (
-          event.key === "Escape" &&
-          mobileMenu.classList.contains("show")
-        ) {
-
-          closeMobileMenu();
-
-        }
-
-      }
-    );
-
-
-    /* =========================
-       CLOSE MENU WHEN RESIZE
-    ========================== */
-
-    window.addEventListener(
-      "resize",
-      function () {
-
-        if (window.innerWidth > 700) {
-          closeMobileMenu();
-        }
-
-      }
-    );
-
-  </script>
+</script>
 
 </body>
 </html>
