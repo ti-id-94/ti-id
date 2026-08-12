@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080b18">
+<meta name="description" content="TI.ID — Ide, Informasi, Inspirasi. Ruang untuk berbagi cerita, pemikiran, pengalaman, dan konten menarik.">
+<title>TI.ID — Ide • Informasi • Inspirasi</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#050711;
+  --bg-soft:#0a0e1d;
+  --card:rgba(12,18,39,.82);
+  --card-2:#0e1530;
+  --text:#f7f8ff;
+  --muted:#a7aec7;
+  --primary:#5b36ff;
+  --primary-2:#00b7ff;
+  --cyan:#00e5ff;
+  --border:rgba(106,125,210,.35);
+  --shadow:0 25px 80px rgba(0,0,0,.35);
+  --radius:22px;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth}
+html{background:var(--bg)}
+body{
+  font-family:Inter,system-ui,sans-serif;
+  background:
+    radial-gradient(circle at 80% 8%,rgba(75,47,255,.22),transparent 28%),
+    radial-gradient(circle at 10% 45%,rgba(0,174,255,.08),transparent 28%),
+    var(--bg);
+  color:var(--text);
+  overflow-x:hidden;
+  transition:background .3s,color .3s;
+}
+body:before,body:after{
+  content:"";position:fixed;pointer-events:none;z-index:-1;border-radius:50%;
+  filter:blur(30px);
+}
+body:before{
+  width:320px;height:320px;right:-160px;top:45%;
+  background:rgba(0,102,255,.14);
+}
+body:after{
+  width:260px;height:260px;left:-150px;top:20%;
+  background:rgba(112,40,255,.12);
+}
+
+a{color:inherit}
+button{font:inherit}
+
+.container{width:min(970px,90%);margin:auto}
+
+header{
+  position:fixed;top:10px;left:50%;transform:translateX(-50%);
+  width:min(980px,92%);z-index:1000;
+  padding:9px 14px;
+  display:flex;align-items:center;gap:20px;
+  border:1px solid var(--border);
+  border-radius:30px;
+  background:rgba(5,8,20,.72);
+  backdrop-filter:blur(20px);
+  box-shadow:0 10px 40px rgba(0,0,0,.22);
+}
+
+.logo{
+  display:flex;align-items:center;gap:9px;
+  text-decoration:none;font-size:22px;font-weight:900;white-space:nowrap;
+}
+.logo img{width:42px;height:42px;object-fit:contain}
+.logo-text span{color:#fff}
+
+nav{display:flex;align-items:center;justify-content:center;gap:4px;flex:1}
+nav a{
+  padding:9px 15px;border-radius:20px;
+  text-decoration:none;font-size:12px;font-weight:600;
+  color:#dce1f5;transition:.25s;
+}
+nav a:hover,nav a.active{
+  color:#fff;background:linear-gradient(135deg,#4a20ff,#252dff);
+  box-shadow:0 6px 20px rgba(83,45,255,.35);
+}
+
+.header-actions{display:flex;align-items:center;gap:8px}
+.icon-btn,.menu-toggle{
+  width:35px;height:35px;border:1px solid var(--border);
+  border-radius:50%;background:rgba(255,255,255,.04);
+  color:#fff;cursor:pointer;display:grid;place-items:center;
+}
+.menu-toggle{display:none}
+
+.hero{
+  min-height:760px;
+  padding:150px 0 70px;
+  position:relative;
+}
+.hero-grid{
+  display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:35px;
+}
+.badge{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:8px 14px;border:1px solid rgba(91,54,255,.55);
+  border-radius:30px;background:rgba(67,40,255,.16);
+  color:#dce1ff;font-size:11px;font-weight:800;
+  letter-spacing:.3px;margin-bottom:18px;
+}
+.badge:before{
+  content:"";width:7px;height:7px;border-radius:50%;
+  background:#a88cff;box-shadow:0 0 12px #7c5cff;
+}
+.hero h1{
+  font-size:clamp(48px,7vw,76px);line-height:.98;
+  letter-spacing:-4px;font-weight:900;
+}
+.gradient-text{
+  background:linear-gradient(100deg,#00bfff 5%,#7250ff 55%,#b335ff 95%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero p{
+  max-width:540px;margin:22px 0;color:var(--muted);
+  font-size:15px;line-height:1.7;
+}
+.buttons{display:flex;gap:12px;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  padding:13px 20px;border-radius:13px;text-decoration:none;
+  font-size:13px;font-weight:800;border:1px solid transparent;
+  transition:.25s;
+}
+.btn:hover{transform:translateY(-3px)}
+.btn-primary{
+  color:#fff;background:linear-gradient(135deg,#008fff,#4924ff);
+  box-shadow:0 12px 30px rgba(45,78,255,.25);
+}
+.btn-secondary{
+  border-color:#4a57a2;background:rgba(10,15,35,.55);color:#fff;
+}
+
+.hero-art{display:grid;place-items:center;position:relative;min-height:450px}
+.orbit{
+  width:330px;height:330px;border-radius:50%;
+  border:2px solid rgba(0,192,255,.65);
+  box-shadow:0 0 50px rgba(0,119,255,.25),inset 0 0 50px rgba(93,50,255,.12);
+  display:grid;place-items:center;position:relative;
+  animation:float 5s ease-in-out infinite;
+}
+.orbit:before,.orbit:after{
+  content:"";position:absolute;border-radius:50%;
+  border:2px solid rgba(111,55,255,.75);transform:rotate(-25deg);
+}
+.orbit:before{width:370px;height:145px}
+.orbit:after{width:420px;height:165px;transform:rotate(25deg);opacity:.6}
+.logo-circle{
+  width:265px;height:265px;border-radius:50%;
+  display:grid;place-items:center;
+  background:radial-gradient(circle,#0e1a3b 0%,#050916 70%);
+  border:1px solid rgba(105,121,255,.45);
+  box-shadow:inset 0 0 50px rgba(30,98,255,.16),0 0 45px rgba(83,43,255,.18);
+}
+.logo-circle img{width:82%;height:82%;object-fit:contain;border-radius:50%}
+.bubble{
+  position:absolute;width:28px;height:28px;border-radius:50%;
+  background:linear-gradient(135deg,#08bfff,#4b2cff);
+  box-shadow:0 0 25px rgba(0,181,255,.55);
+}
+.b1{top:40px;right:35px}.b2{bottom:55px;left:30px;width:42px;height:42px}.b3{top:125px;left:15px;width:18px;height:18px}
+
+.connect{
+  margin-top:22px;color:#9ea7c4;font-size:11px;
+  display:flex;align-items:center;gap:12px;
+}
+.connect:before,.connect:after{content:"";height:1px;width:24px;background:#566080}
+.wa-mini{
+  display:flex;align-items:center;gap:14px;width:max-content;
+  margin-top:9px;padding:10px 16px;border-radius:14px;
+  border:1px solid rgba(0,229,255,.45);
+  background:linear-gradient(100deg,rgba(0,196,178,.14),rgba(76,36,255,.12));
+  text-decoration:none;
+}
+.wa-icon{font-size:27px}
+.wa-mini strong{display:block;font-size:12px}.wa-mini span{font-size:11px;color:#fff;font-weight:800}
+
+.feature-strip{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border:1px solid var(--border);border-radius:18px;
+  background:rgba(12,18,42,.72);overflow:hidden;
+  box-shadow:var(--shadow);
+}
+.feature{
+  display:flex;align-items:center;gap:12px;padding:18px 15px;
+  border-right:1px solid var(--border);
+}
+.feature:last-child{border-right:0}
+.feature-icon{
+  min-width:48px;height:48px;border-radius:50%;display:grid;place-items:center;
+  background:linear-gradient(135deg,#4020ff,#009fff);
+  font-size:22px;box-shadow:0 8px 22px rgba(65,53,255,.3);
+}
+.feature h3{font-size:13px;margin-bottom:5px}.feature p{font-size:10px;color:var(--muted);line-height:1.45}
+
+section{padding:75px 0}
+.section-head{margin-bottom:25px}
+.section-label{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:6px 11px;border-radius:20px;background:rgba(48,77,255,.13);
+  color:#d7dcff;border:1px solid rgba(81,98,255,.35);
+  font-size:10px;font-weight:800;margin-bottom:9px;
+}
+.section-label:before{content:"";width:6px;height:6px;background:#22baff;border-radius:50%}
+.section-title{font-size:30px;letter-spacing:-1.2px}
+.section-description{color:var(--muted);font-size:12px;line-height:1.7;margin-top:6px}
+
+.articles{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{
+  overflow:hidden;border:1px solid var(--border);border-radius:17px;
+  background:linear-gradient(160deg,rgba(17,25,55,.92),rgba(8,13,30,.92));
+  box-shadow:0 12px 35px rgba(0,0,0,.18);
+  transition:.3s;
+}
+.card:hover{transform:translateY(-6px);border-color:#5867c8}
+.card-img{height:145px;overflow:hidden;position:relative}
+.card-img img,.card-img .fallback{
+  width:100%;height:100%;object-fit:cover;
+}
+.card-img:after{
+  content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(4,7,18,.55),transparent 65%);
+}
+.fallback{
+  display:grid;place-items:center;font-size:55px;
+  background:linear-gradient(135deg,#18214a,#10112c);
+}
+.card-body{padding:15px}
+.tag{
+  display:inline-block;padding:5px 9px;border-radius:20px;
+  font-size:9px;font-weight:800;background:#5938ff;color:#fff;margin-bottom:9px;
+}
+.card:nth-child(2) .tag{background:#6339ff}.card:nth-child(3) .tag{background:#db25c7}
+.card h3{font-size:15px;margin-bottom:7px}
+.card p{color:var(--muted);font-size:11px;line-height:1.55}
+.meta{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-top:14px;color:#aab1c9;font-size:9px;
+}
+.read{
+  width:28px;height:28px;border:1px solid #5361aa;border-radius:50%;
+  display:grid;place-items:center;color:#fff;text-decoration:none;
+}
+
+.video-card{
+  border:1px solid var(--border);border-radius:20px;overflow:hidden;
+  background:rgba(10,15,33,.8);box-shadow:var(--shadow);
+}
+.video-wrap{aspect-ratio:16/9;background:#000}
+.video-wrap video{width:100%;height:100%;object-fit:cover;display:block}
+.video-info{padding:18px}.video-info h3{font-size:18px}.video-info p{margin-top:6px;color:var(--muted);font-size:12px;line-height:1.6}
+
+.contact{
+  border:1px solid rgba(71,98,255,.55);border-radius:20px;
+  padding:20px 24px;background:linear-gradient(110deg,rgba(0,125,255,.8),rgba(70,30,255,.8));
+  display:flex;align-items:center;justify-content:space-between;gap:20px;
+}
+.contact-left{display:flex;align-items:center;gap:15px}.contact-icon{font-size:42px}
+.contact h2{font-size:20px}.contact p{font-size:11px;margin-top:4px;color:#dce3ff}
+.contact .btn{background:#12c95b;color:#fff;box-shadow:none}
+
+footer{
+  border-top:1px solid var(--border);padding:25px 0;color:#858da8;font-size:10px;
+}
+.footer-inner{display:flex;justify-content:space-between;align-items:center;gap:15px}
+.footer-logo{font-size:18px;font-weight:900;color:#fff}
+.footer-inner span{font-size:10px}
+
+.floating-wa{
+  position:fixed;right:18px;bottom:18px;width:54px;height:54px;
+  border-radius:50%;display:grid;place-items:center;
+  background:#18d965;color:#fff;text-decoration:none;font-size:28px;
+  box-shadow:0 8px 30px rgba(24,217,101,.35);z-index:999;
+}
+.floating-wa:before{
+  content:"Chat kami";position:absolute;right:64px;white-space:nowrap;
+  padding:7px 11px;border-radius:12px;background:#101629;border:1px solid var(--border);
+  color:#dfe4f5;font-size:9px;opacity:0;transform:translateX(5px);transition:.2s;
+}
+.floating-wa:hover:before{opacity:1;transform:translateX(0)}
+
+.reveal{opacity:0;transform:translateY(25px);transition:.7s ease}
+.reveal.show{opacity:1;transform:none}
+
+.modal{
+  position:fixed;inset:0;z-index:2000;padding:18px;
+  display:grid;place-items:center;background:rgba(0,0,0,.72);
+  backdrop-filter:blur(10px);opacity:0;visibility:hidden;transition:.25s;
+}
+.modal.show{opacity:1;visibility:visible}
+.modal-box{
+  position:relative;width:min(650px,100%);max-height:85vh;overflow:auto;
+  padding:30px;border-radius:22px;border:1px solid var(--border);
+  background:#0d142b;color:#fff;box-shadow:0 30px 90px rgba(0,0,0,.5);
+  transform:translateY(20px) scale(.98);transition:.25s;
+}
+.modal.show .modal-box{transform:none}
+.modal-close{
+  position:absolute;right:12px;top:12px;width:38px;height:38px;
+  border:1px solid var(--border);border-radius:50%;background:#18213d;color:#fff;
+  font-size:24px;cursor:pointer;
+}
+.modal-cat{color:#56c8ff;font-size:10px;font-weight:800;letter-spacing:2px;margin-bottom:10px}
+.modal h2{font-size:32px;line-height:1.15;margin-right:40px}
+.modal-lead{color:#b8c0d9;margin:15px 0;line-height:1.7}
+.modal-content{color:#d8dcef;font-size:14px;line-height:1.9}
+
+body.light{
+  --bg:#f5f7fc;--bg-soft:#fff;--card:rgba(255,255,255,.9);
+  --text:#111522;--muted:#66708a;--border:rgba(61,76,125,.18);
+}
+body.light{
+  background:radial-gradient(circle at 80% 5%,rgba(83,64,255,.12),transparent 30%),#f5f7fc;
+}
+body.light header{background:rgba(255,255,255,.78)}
+body.light nav a{color:#343b50}
+body.light nav a:hover,body.light nav a.active{color:#fff}
+body.light .hero p,.light .section-description{color:#66708a}
+body.light .feature-strip,.light .card{background:rgba(255,255,255,.9)}
+body.light .card h3,.light .feature h3{color:#111522}
+body.light .modal-box{background:#fff;color:#111522}
+body.light .modal-lead,.light .modal-content{color:#5f687d}
+
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+
+@media(max-width:800px){
+  header{top:7px;padding:8px 10px}
+  .logo img{width:37px;height:37px}.logo{font-size:19px}
+  nav{
+    position:absolute;top:60px;left:0;right:0;display:none;
+    flex-direction:column;align-items:stretch;padding:10px;
+    border:1px solid var(--border);border-radius:18px;
+    background:rgba(7,10,24,.96);backdrop-filter:blur(20px);
+  }
+  nav.open{display:flex}
+  nav a{padding:12px 15px}
+  .menu-toggle{display:grid}
+  .hero{padding:125px 0 55px;min-height:auto}
+  .hero-grid{grid-template-columns:1fr;text-align:center}
+  .hero p{margin-left:auto;margin-right:auto}
+  .buttons{justify-content:center}
+  .hero-art{min-height:310px;order:-1}
+  .orbit{width:230px;height:230px}.orbit:before{width:260px;height:105px}.orbit:after{width:290px;height:115px}
+  .logo-circle{width:185px;height:185px}
+  .connect{justify-content:center}
+  .wa-mini{margin-left:auto;margin-right:auto}
+  .feature-strip{grid-template-columns:1fr 1fr}
+  .feature{border-bottom:1px solid var(--border)}
+  .feature:nth-child(2){border-right:0}
+  .feature:nth-child(3),.feature:nth-child(4){border-bottom:0}
+  .articles{grid-template-columns:1fr}
+  .card-img{height:190px}
+  section{padding:60px 0}
+  .contact{flex-direction:column;align-items:flex-start}
+  .footer-inner{flex-direction:column;align-items:flex-start}
+}
+@media(max-width:450px){
+  .header-actions .search{display:none}
+  .hero h1{letter-spacing:-2.5px}
+  .feature{padding:14px 10px}.feature-icon{min-width:42px;height:42px;font-size:19px}
+  .feature h3{font-size:11px}.feature p{font-size:9px}
+  .contact .btn{width:100%}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <a class="logo" href="#home" aria-label="TI.ID">
+    <img src="logo-ti-id.png" alt="Logo TI.ID">
+    <span class="logo-text">TI.<span>ID</span></span>
+  </a>
+
+  <nav id="nav">
+    <a href="#home" class="active">Beranda</a>
+    <a href="#tentang">Tentang</a>
+    <a href="#tulisan">Tulisan</a>
+    <a href="#video">Layanan</a>
+    <a href="#kontak">Kontak</a>
+  </nav>
+
+  <div class="header-actions">
+    <button class="icon-btn search" aria-label="Cari">⌕</button>
+    <button class="icon-btn" id="themeBtn" aria-label="Ganti tema">☀️</button>
+    <button class="menu-toggle" id="menuBtn" aria-label="Buka menu">☰</button>
+  </div>
+</header>
+
+<main id="home">
+<section class="hero">
+  <div class="container hero-grid">
+    <div class="hero-text">
+      <div class="badge">WELCOME TO TI.ID</div>
+      <h1>Halo, kami<br><span class="gradient-text">TI.ID.</span></h1>
+      <p>
+        Sebuah ruang untuk berbagi cerita, pemikiran, pengalaman
+        dan berbagai konten menarik yang bisa memberi manfaat dan inspirasi.
+      </p>
+
+      <div class="buttons">
+        <a href="#tulisan" class="btn btn-primary">→ &nbsp; Lihat Tulisan</a>
+        <a href="#tentang" class="btn btn-secondary">♙ &nbsp; Tentang Kami</a>
+      </div>
+
+      <div class="connect">Terhubung dengan kami</div>
+      <a class="wa-mini" href="https://wa.me/6281298776325" target="_blank" rel="noopener">
+        <span class="wa-icon">◉</span>
+        <span><strong>Chat WhatsApp</strong><span>0812 9877 6325</span></span>
+        <b>→</b>
+      </a>
+    </div>
+
+    <div class="hero-art" aria-hidden="true">
+      <div class="orbit">
+        <div class="logo-circle"><img src="logo-ti-id.png" alt=""></div>
+      </div>
+      <i class="bubble b1"></i><i class="bubble b2"></i><i class="bubble b3"></i>
+    </div>
+  </div>
+</section>
+
+<section class="container reveal" id="tentang">
+  <div class="feature-strip">
+    <div class="feature"><div class="feature-icon">✎</div><div><h3>Menulis</h3><p>Berbagi tulisan, cerita dan catatan.</p></div></div>
+    <div class="feature"><div class="feature-icon">💡</div><div><h3>Berbagi Ide</h3><p>Bertukar pemikiran, memperluas wawasan.</p></div></div>
+    <div class="feature"><div class="feature-icon">🚀</div><div><h3>Berkembang</h3><p>Terus belajar dan menciptakan hal baru.</p></div></div>
+    <div class="feature"><div class="feature-icon">♥</div><div><h3>Memberi Manfaat</h3><p>Membuat konten yang bermanfaat untuk semua.</p></div></div>
+  </div>
+</section>
+
+<section class="container reveal" id="tulisan">
+  <div class="section-head">
+    <div class="section-label">ARTIKEL TERBARU</div>
+    <h2 class="section-title">Tulisan Pilihan</h2>
+    <p class="section-description">Kumpulan tulisan dan konten menarik dari TI.ID.</p>
+  </div>
+
+  <div class="articles">
+    <article class="card">
+      <div class="card-img"><img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=80" alt="Pemandangan pegunungan" loading="lazy"></div>
+      <div class="card-body">
+        <span class="tag">Motivasi</span>
+        <h3>Memulai Sesuatu yang Baru</h3>
+        <p>Setiap perjalanan besar selalu dimulai dari satu langkah kecil.</p>
+        <div class="meta"><span>12 Mei 2025 &nbsp; • &nbsp; 5 menit baca</span><a class="read article-link" href="#" data-index="0">→</a></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-img"><img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=900&q=80" alt="Kopi dan catatan" loading="lazy"></div>
+      <div class="card-body">
+        <span class="tag">Catatan</span>
+        <h3>Tentang Sebuah Proses</h3>
+        <p>Tidak semua hal harus berjalan cepat. Yang penting adalah terus bergerak.</p>
+        <div class="meta"><span>8 Mei 2025 &nbsp; • &nbsp; 4 menit baca</span><a class="read article-link" href="#" data-index="1">→</a></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-img"><img src="https://images.unsplash.com/photo-1495446815901-a7297e633e8d?auto=format&fit=crop&w=900&q=80" alt="Buku dan tanaman" loading="lazy"></div>
+      <div class="card-body">
+        <span class="tag">Pemikiran</span>
+        <h3>Belajar dari Pengalaman</h3>
+        <p>Pengalaman sering kali menjadi guru terbaik dalam perjalanan hidup.</p>
+        <div class="meta"><span>1 Mei 2025 &nbsp; • &nbsp; 6 menit baca</span><a class="read article-link" href="#" data-index="2">→</a></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="container reveal" id="video">
+  <div class="section-head">
+    <div class="section-label">VIDEO & KONTEN</div>
+    <h2 class="section-title">Konten TI.ID</h2>
+    <p class="section-description">Nikmati video dan konten terbaru dari TI.ID.</p>
+  </div>
+
+  <div class="video-card">
+    <div class="video-wrap">
+      <video controls playsinline preload="metadata">
+        <source src="1000227164.mp4" type="video/mp4">
+        Browser kamu belum mendukung video HTML5.
+      </video>
+    </div>
+    <div class="video-info">
+      <h3>Video TI.ID</h3>
+      <p>Konten video untuk berbagi informasi, ide, pengalaman, dan inspirasi.</p>
+    </div>
+  </div>
+</section>
+
+<section class="container reveal" id="kontak">
+  <div class="contact">
+    <div class="contact-left">
+      <div class="contact-icon">◉</div>
+      <div>
+        <h2>Mari Terhubung</h2>
+        <p>Punya pertanyaan, ide, atau ingin berdiskusi? Hubungi kami melalui WhatsApp.</p>
+      </div>
+    </div>
+    <a class="btn" href="https://wa.me/6281298776325" target="_blank" rel="noopener">💬 &nbsp; Chat WhatsApp →</a>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <div>
+      <div class="footer-logo">TI.ID</div>
+      <span>IDE • INFORMASI • INSPIRASI</span>
+    </div>
+    <div>© 2026 TI.ID — All Rights Reserved. ♥</div>
+  </div>
+</footer>
+
+<a class="floating-wa" href="https://wa.me/6281298776325" target="_blank" rel="noopener" aria-label="Chat WhatsApp">◉</a>
+
+<div class="modal" id="articleModal" aria-hidden="true">
+  <div class="modal-box">
+    <button class="modal-close" id="modalClose" aria-label="Tutup">×</button>
+    <div class="modal-cat" id="modalCat"></div>
+    <h2 id="modalTitle"></h2>
+    <p class="modal-lead" id="modalLead"></p>
+    <div class="modal-content" id="modalContent"></div>
+  </div>
+</div>
+
+<script>
+const articles = [
+  {
+    category:"MOTIVASI",
+    title:"Memulai Sesuatu yang Baru",
+    lead:"Setiap perjalanan besar selalu dimulai dari satu langkah kecil.",
+    content:"Memulai sesuatu yang baru memang tidak selalu mudah. Kadang kita merasa ragu, takut gagal, atau terlalu banyak berpikir sebelum mengambil langkah pertama. Namun, setiap perjalanan besar selalu dimulai dari keberanian untuk mencoba. Tidak perlu menunggu semuanya sempurna. Mulailah dari hal kecil, lakukan dengan konsisten, dan terus belajar dari setiap proses."
+  },
+  {
+    category:"CATATAN",
+    title:"Tentang Sebuah Proses",
+    lead:"Tidak semua hal harus berjalan cepat. Yang penting adalah terus bergerak.",
+    content:"Dalam hidup, setiap orang memiliki waktunya masing-masing. Tidak semua hal harus selesai dengan cepat. Ada proses yang membutuhkan waktu, kesabaran, dan banyak percobaan. Yang terpenting bukan seberapa cepat kita sampai, tetapi apakah kita tetap bergerak dan tidak menyerah ketika menghadapi kesulitan."
+  },
+  {
+    category:"PEMIKIRAN",
+    title:"Belajar dari Pengalaman",
+    lead:"Pengalaman sering kali menjadi guru terbaik dalam perjalanan hidup.",
+    content:"Setiap pengalaman memberikan pelajaran yang berbeda. Kesalahan mengajarkan kita untuk menjadi lebih hati-hati, sedangkan keberhasilan mengajarkan kita untuk terus berkembang. Jangan takut dengan pengalaman yang kurang menyenangkan, karena dari sanalah kita sering menemukan pelajaran yang paling berharga."
+  }
+];
+
+const nav = document.getElementById("nav");
+const menuBtn = document.getElementById("menuBtn");
+const themeBtn = document.getElementById("themeBtn");
+
+menuBtn.addEventListener("click",()=>{
+  nav.classList.toggle("open");
+  menuBtn.textContent = nav.classList.contains("open") ? "×" : "☰";
+});
+
+nav.querySelectorAll("a").forEach(a=>{
+  a.addEventListener("click",()=>nav.classList.remove("open"));
+});
+
+function applyTheme(theme){
+  document.body.classList.toggle("light",theme==="light");
+  themeBtn.textContent = theme==="light" ? "🌙" : "☀️";
+}
+applyTheme(localStorage.getItem("ti-theme") || "dark");
+
+themeBtn.addEventListener("click",()=>{
+  const next=document.body.classList.contains("light")?"dark":"light";
+  localStorage.setItem("ti-theme",next);
+  applyTheme(next);
+});
+
+const modal=document.getElementById("articleModal");
+const modalCat=document.getElementById("modalCat");
+const modalTitle=document.getElementById("modalTitle");
+const modalLead=document.getElementById("modalLead");
+const modalContent=document.getElementById("modalContent");
+
+function openArticle(index){
+  const a=articles[index];
+  if(!a)return;
+  modalCat.textContent=a.category;
+  modalTitle.textContent=a.title;
+  modalLead.textContent=a.lead;
+  modalContent.textContent=a.content;
+  modal.classList.add("show");
+  modal.setAttribute("aria-hidden","false");
+  document.body.style.overflow="hidden";
+}
+
+function closeArticle(){
+  modal.classList.remove("show");
+  modal.setAttribute("aria-hidden","true");
+  document.body.style.overflow="";
+}
+
+document.querySelectorAll(".article-link").forEach(link=>{
+  link.addEventListener("click",e=>{
+    e.preventDefault();
+    openArticle(Number(link.dataset.index));
+  });
+});
+document.getElementById("modalClose").addEventListener("click",closeArticle);
+modal.addEventListener("click",e=>{if(e.target===modal)closeArticle()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeArticle()});
+
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting)entry.target.classList.add("show");
+  });
+},{threshold:.12});
+document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+
+const sections=[...document.querySelectorAll("main section[id]")];
+const navLinks=[...document.querySelectorAll("nav a")];
+
+window.addEventListener("scroll",()=>{
+  let current="home";
+  sections.forEach(section=>{
+    if(window.scrollY >= section.offsetTop-180) current=section.id;
+  });
+  navLinks.forEach(link=>{
+    link.classList.toggle("active",link.getAttribute("href")==="#"+current);
+  });
+},{passive:true});
+</script>
+</body>
+</html>
